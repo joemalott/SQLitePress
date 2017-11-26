@@ -1,5 +1,6 @@
 ## Introduction
 
+The goal of this was to provide a stupidly fast way to implement WordPress locally without the need for MySQL. The goal is to allow theme development to be quick and painless. This should not be used for serious development unless you are looking to utilize SQLite in your own WordPress installations. There are valid arguments for and against this, and use-cases which would factor in a decision of SQLite over MySQL, but the portability and quick setup is a great advantage especially for low-traffic and simple WordPress installations.
 
 ## Installation
 
