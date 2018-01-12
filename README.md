@@ -1,16 +1,18 @@
 ## Introduction
 
-The goal of this was to provide a stupidly fast way to implement WordPress locally without the need for MySQL. The goal is to allow theme development to be quick and painless. This should not be used for serious development unless you are looking to utilize SQLite in your own WordPress installations. There are valid arguments for and against this, and use-cases which would factor in a decision of SQLite over MySQL, but the portability and quick setup is a great advantage especially for low-traffic and simple WordPress installations.
+The goal of this was to provide a stupidly fast way to implement WordPress locally without the need for MySQL. The goal is to allow theme development to be quick and painless. The goal of this project was portability and painless set-up. 
+
+I do not recommend this for production environments as there are unforseen drawbacks of MySQL, but as a starting point for local theme development it should be a major time-saver, especially for those who like to tinker or experiment with WordPress. 
 
 ## Installation
 
 
 #### The Simplest Method
 
-The quickest method is to simply clone this repo into any folder using:
+The quickest method is to simply clone this repo:
 
 ~~~~
-git clone https://github.com/Coasternerd/Wordpress-SQLite.git .
+git clone https://github.com/Coasternerd/SQLitePress.git
 ~~~~
 
 For Mac users, PHP comes pre-installed making this even more convenient. (For Windows users you must first install PHP here: [PHP for Windows](https://www.sitepoint.com/how-to-install-php-on-windows/ "Windows PHP | SitePoint"))
@@ -18,10 +20,10 @@ For Mac users, PHP comes pre-installed making this even more convenient. (For Wi
 Simply start a server using:
 
 ~~~~
-php -S localhost:8888
+php -S localhost:8000
 ~~~~
 
-Then you can simply visit http://localhost:8888 and see your live site. Note you can use any server port you desire, localhost:8888 is simply a common port for local development.
+Then you can simply visit http://localhost:8000 and see your live site. Note you can use any server port you like.
 
 For WordPress installation, simply Follow WordPress' famous 5-Minute installation and you are in business. Happy Theming/Developing/Testing :-)
 
