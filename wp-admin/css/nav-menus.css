@@ -203,7 +203,7 @@ ul.add-menu-item-tabs li {
 }
 
 #menu-management .menu-add-new abbr {
-	font-weight:600;
+	font-weight: 600;
 }
 
 #select-nav-menu-container {
@@ -785,7 +785,8 @@ body.menu-max-depth-11 { min-width: 1280px !important; }
 }
 
 @media screen and ( max-width: 782px ) {
-	body.nav-menus-php {
+	body.nav-menus-php,
+	body.wp-customizer {
 		min-width: 0 !important;
 	}
 

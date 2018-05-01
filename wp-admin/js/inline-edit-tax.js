@@ -21,9 +21,8 @@ var inlineEditTax;
 inlineEditTax = {
 
 	/**
-	 * @summary Initializes the inline taxonomy editor.
-	 *
-	 * Adds event handlers to be able to quick edit.
+	 * Initializes the inline taxonomy editor by adding event handlers to be able to
+	 * quick edit.
 	 *
 	 * @since 2.7.0
 	 *
@@ -37,13 +36,13 @@ inlineEditTax = {
 		t.type = $('#the-list').attr('data-wp-lists').substr(5);
 		t.what = '#'+t.type+'-';
 
-		$('#the-list').on('click', 'a.editinline', function(){
-			inlineEditTax.edit(this);
-			return false;
+		$( '#the-list' ).on( 'click', '.editinline', function() {
+			$( this ).attr( 'aria-expanded', 'true' );
+			inlineEditTax.edit( this );
 		});
 
-		/*
-		 * @summary Cancels inline editing when pressing escape inside the inline editor.
+		/**
+		 * Cancels inline editing when pressing escape inside the inline editor.
 		 *
 		 * @param {Object} e The keyup event that has been triggered.
 		 */
@@ -55,21 +54,21 @@ inlineEditTax = {
 		});
 
 		/**
-		 * @summary Cancels inline editing when clicking the cancel button.
+		 * Cancels inline editing when clicking the cancel button.
 		 */
 		$( '.cancel', row ).click( function() {
 			return inlineEditTax.revert();
 		});
 
 		/**
-		 * @summary Saves the inline edits when clicking the save button.
+		 * Saves the inline edits when clicking the save button.
 		 */
 		$( '.save', row ).click( function() {
 			return inlineEditTax.save(this);
 		});
 
 		/**
-		 * @summary Saves the inline edits when pressing enter inside the inline editor.
+		 * Saves the inline edits when pressing enter inside the inline editor.
 		 */
 		$( 'input, select', row ).keydown( function( e ) {
 			// 13 = [enter]
@@ -79,7 +78,7 @@ inlineEditTax = {
 		});
 
 		/**
-		 * @summary Saves the inline edits on submitting the inline edit form.
+		 * Saves the inline edits on submitting the inline edit form.
 		 */
 		$( '#posts-filter input[type="submit"]' ).mousedown( function() {
 			t.revert();
@@ -149,7 +148,7 @@ inlineEditTax = {
 	},
 
 	/**
-	 * @summary Saves the quick edit data.
+	 * Saves the quick edit data.
 	 *
 	 * Saves the quick edit data to the server and replaces the table row with the
 	 * HTML retrieved from the server.
@@ -187,7 +186,7 @@ inlineEditTax = {
 		// Do the ajax request to save the data to the server.
 		$.post( ajaxurl, params,
 			/**
-			 * @summary Handles the response from the server.
+			 * Handles the response from the server
 			 *
 			 * Handles the response from the server, replaces the table row with the response
 			 * from the server.
@@ -220,8 +219,10 @@ inlineEditTax = {
 						$( '#parent' ).find( 'option[value=' + option_value + ']' ).text( row.find( '.row-title' ).text() );
 
 						row.hide().fadeIn( 400, function() {
-							// Move focus back to the Quick Edit link.
-							row.find( '.editinline' ).focus();
+							// Move focus back to the Quick Edit button.
+							row.find( '.editinline' )
+								.attr( 'aria-expanded', 'false' )
+								.focus();
 							wp.a11y.speak( inlineEditL10n.saved );
 						});
 
@@ -263,8 +264,10 @@ inlineEditTax = {
 			$('#'+id).siblings('tr.hidden').addBack().remove();
 			id = id.substr( id.lastIndexOf('-') + 1 );
 
-			// Show the taxonomy row and move focus back to the Quick Edit link.
-			$( this.what + id ).show().find( '.editinline' ).focus();
+			// Show the taxonomy row and move focus back to the Quick Edit button.
+			$( this.what + id ).show().find( '.editinline' )
+				.attr( 'aria-expanded', 'false' )
+				.focus();
 		}
 	},
 
