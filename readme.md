@@ -16,7 +16,8 @@ Then fire up PHP server. On OSX this is
 
 `php -S localhost:8000`
 
-For windows you can download PHP [here](https://windows.php.net/download/)
+> For windows you can download PHP [here](https://windows.php.net/download/)
+> Also the localhost:8000 uses the arbitrary port 8000, you can use any port you like.
 
 Open a browser at http://localhost:8000 and after inputting admin credentials you are immediately in a new instance of WordPress. With the power of SQLite you now have a highly portable instance to begin tinkering with.
 
