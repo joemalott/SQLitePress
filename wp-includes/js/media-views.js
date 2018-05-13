@@ -1243,14 +1243,12 @@ var Library = wp.media.controller.Library,
  *
  * A state for editing a gallery's images and settings.
  *
- * @since 3.5.0
+ * @memberOf wp.media.controller
  *
  * @class
  * @augments wp.media.controller.Library
  * @augments wp.media.controller.State
  * @augments Backbone.Model
- *
- * @memberOf wp.media.controller
  *
  * @param {object}                     [attributes]                       The attributes hash passed to the state.
  * @param {string}                     [attributes.id=gallery-edit]       Unique identifier.
@@ -1266,9 +1264,9 @@ var Library = wp.media.controller.Library,
  * @param {boolean}                    [attributes.describe=true]         Whether to offer UI to describe attachments - e.g. captioning images in a gallery.
  * @param {boolean}                    [attributes.displaySettings=true]  Whether to show the attachment display settings interface.
  * @param {boolean}                    [attributes.dragInfo=true]         Whether to show instructional text about the attachments being sortable.
- * @param {number}                     [attributes.idealColumnWidth=170]  The ideal column width in pixels for attachments.
+ * @param {int}                        [attributes.idealColumnWidth=170]  The ideal column width in pixels for attachments.
  * @param {boolean}                    [attributes.editing=false]         Whether the gallery is being created, or editing an existing instance.
- * @param {number}                     [attributes.priority=60]           The priority for the state link in the media menu.
+ * @param {int}                        [attributes.priority=60]           The priority for the state link in the media menu.
  * @param {boolean}                    [attributes.syncSelection=false]   Whether the Attachments selection should be persisted from the last state.
  *                                                                        Defaults to false for this state, because the library passed in  *is* the selection.
  * @param {view}                       [attributes.AttachmentView]        The single `Attachment` view to be used in the `Attachments`.
@@ -1394,16 +1392,14 @@ var Selection = wp.media.model.Selection,
  *
  * A state for selecting more images to add to a gallery.
  *
- * @since 3.5.0
+ * @memberOf wp.media.controller
  *
  * @class
  * @augments wp.media.controller.Library
  * @augments wp.media.controller.State
  * @augments Backbone.Model
  *
- * @memberof wp.media.controller
- *
- * @param {Object}                     [attributes]                         The attributes hash passed to the state.
+ * @param {object}                     [attributes]                         The attributes hash passed to the state.
  * @param {string}                     [attributes.id=gallery-library]      Unique identifier.
  * @param {string}                     [attributes.title=Add to Gallery]    Title for the state. Displays in the frame's title region.
  * @param {boolean}                    [attributes.multiple=add]            Whether multi-select is enabled. @todo 'add' doesn't seem do anything special, and gets used as a boolean.
@@ -1420,7 +1416,7 @@ var Selection = wp.media.model.Selection,
  * @param {boolean}                    [attributes.sortable=true]           Whether the Attachments should be sortable. Depends on the orderby property being set to menuOrder on the attachments collection.
  * @param {boolean}                    [attributes.autoSelect=true]         Whether an uploaded attachment should be automatically added to the selection.
  * @param {boolean}                    [attributes.contentUserSetting=true] Whether the content region's mode should be set and persisted per user.
- * @param {number}                     [attributes.priority=100]            The priority for the state link in the media menu.
+ * @param {int}                        [attributes.priority=100]            The priority for the state link in the media menu.
  * @param {boolean}                    [attributes.syncSelection=false]     Whether the Attachments selection should be persisted from the last state.
  *                                                                          Defaults to false because for this state, because the library of the Edit Gallery state is the selection.
  */
@@ -1437,13 +1433,10 @@ GalleryAdd = Library.extend(/** @lends wp.media.controller.GalleryAdd.prototype 
 	}, Library.prototype.defaults ),
 
 	/**
-	 * Initializes the library. Creates a library of images if a library isn't supplied.
-	 *
 	 * @since 3.5.0
-	 *
-	 * @returns {void}
 	 */
 	initialize: function() {
+		// If a library wasn't supplied, create a library of images.
 		if ( ! this.get('library') ) {
 			this.set( 'library', wp.media.query({ type: 'image' }) );
 		}
@@ -1452,14 +1445,7 @@ GalleryAdd = Library.extend(/** @lends wp.media.controller.GalleryAdd.prototype 
 	},
 
 	/**
-	 * Activates the library.
-	 *
-	 * Removes all event listeners if in edit mode. Creates a validator to check an attachment.
-	 * Resets library and re-enables event listeners. Activates edit mode. Calls the parent's activate method.
-	 *
 	 * @since 3.5.0
-	 *
-	 * @returns {void}
 	 */
 	activate: function() {
 		var library = this.get('library'),
@@ -1469,19 +1455,15 @@ GalleryAdd = Library.extend(/** @lends wp.media.controller.GalleryAdd.prototype 
 			library.unobserve( this.editLibrary );
 		}
 
-		/*
-		 * Accept attachments that exist in the original library but
-		 * that do not exist in gallery's library yet.
-		 */
+		// Accepts attachments that exist in the original library and
+		// that do not exist in gallery's library.
 		library.validator = function( attachment ) {
 			return !! this.mirroring.get( attachment.cid ) && ! edit.get( attachment.cid ) && Selection.prototype.validator.apply( this, arguments );
 		};
 
-		/*
-		 * Reset the library to ensure that all attachments are re-added
-		 * to the collection. Do so silently, as calling `observe` will
-		 * trigger the `reset` event.
-		 */
+		// Reset the library to ensure that all attachments are re-added
+		// to the collection. Do so silently, as calling `observe` will
+		// trigger the `reset` event.
 		library.reset( library.mirroring.models, { silent: true });
 		library.observe( edit );
 		this.editLibrary = edit;
@@ -2048,37 +2030,21 @@ EditImage = wp.media.controller.State.extend(/** @lends wp.media.controller.Edit
 	},
 
 	/**
-	 * Activates a frame for editing a featured image.
-	 *
 	 * @since 3.9.0
-	 *
-	 * @returns {void}
 	 */
 	activate: function() {
 		this.frame.on( 'toolbar:render:edit-image', _.bind( this.toolbar, this ) );
 	},
 
 	/**
-	 * Deactivates a frame for editing a featured image.
-	 *
 	 * @since 3.9.0
-	 *
-	 * @returns {void}
 	 */
 	deactivate: function() {
 		this.frame.off( 'toolbar:render:edit-image' );
 	},
 
 	/**
-	 * Adds a toolbar with a back button.
-	 *
-	 * When the back button is pressed it checks whether there is a previous state.
-	 * In case there is a previous state it sets that previous state otherwise it
-	 * closes the frame.
-	 *
 	 * @since 3.9.0
-	 *
-	 * @returns {void}
 	 */
 	toolbar: function() {
 		var frame = this.frame,
@@ -2316,7 +2282,7 @@ var l10n = wp.media.view.l10n,
 /**
  * wp.media.controller.Cropper
  *
- * A class for cropping an image when called from the header media customization panel.
+ * A state for cropping an image.
  *
  * @memberOf wp.media.controller
  *
@@ -2338,41 +2304,16 @@ Cropper = wp.media.controller.State.extend(/** @lends wp.media.controller.Croppe
 		doCropArgs: {}
 	},
 
-	/**
-	 * Shows the crop image window when called from the Add new image button.
-	 *
-	 * @since 4.2.0
-	 *
-	 * @returns {void}
-	 */
 	activate: function() {
 		this.frame.on( 'content:create:crop', this.createCropContent, this );
 		this.frame.on( 'close', this.removeCropper, this );
 		this.set('selection', new Backbone.Collection(this.frame._selection.single));
 	},
 
-	/**
-	 * Changes the state of the toolbar window to browse mode.
-	 *
-	 * @since 4.2.0
-	 *
-	 * @returns {void}
-	 */
 	deactivate: function() {
 		this.frame.toolbar.mode('browse');
 	},
 
-	/**
-	 * Creates the crop image window.
-	 *
-	 * Initialized when clicking on the Select and Crop button.
-	 *
-	 * @since 4.2.0
-	 *
-	 * @fires crop window
-	 *
-	 * @returns {void}
-	 */
 	createCropContent: function() {
 		this.cropperView = new wp.media.view.Cropper({
 			controller: this,
@@ -2382,28 +2323,12 @@ Cropper = wp.media.controller.State.extend(/** @lends wp.media.controller.Croppe
 		this.frame.content.set(this.cropperView);
 
 	},
-
-	/**
-	 * Removes the image selection and closes the cropping window.
-	 *
-	 * @since 4.2.0
-	 *
-	 * @returns {void}
-	 */
 	removeCropper: function() {
 		this.imgSelect.cancelSelection();
 		this.imgSelect.setOptions({remove: true});
 		this.imgSelect.update();
 		this.cropperView.remove();
 	},
-
-	/**
-	 * Checks if cropping can be skipped and creates crop toolbar accordingly.
-	 *
-	 * @since 4.2.0
-	 *
-	 * @returns {void}
-	 */
 	createCropToolbar: function() {
 		var canSkipCrop, toolbarOptions;
 
@@ -2459,13 +2384,6 @@ Cropper = wp.media.controller.State.extend(/** @lends wp.media.controller.Croppe
 		this.frame.toolbar.set( new wp.media.view.Toolbar(toolbarOptions) );
 	},
 
-	/**
-	 * Creates an object with the image attachment and crop properties.
-	 *
-	 * @since 4.2.0
-	 *
-	 * @returns {$.promise} A jQuery promise with the custom header crop details.
-	 */
 	doCrop: function( attachment ) {
 		return wp.ajax.post( 'custom-header-crop', _.extend(
 			{},
@@ -2490,28 +2408,18 @@ var Controller = wp.media.controller,
 	CustomizeImageCropper;
 
 /**
- * A state for cropping an image in the customizer.
+ * wp.media.controller.CustomizeImageCropper
  *
- * @since 4.3.0
- *
- * @constructs wp.media.controller.CustomizeImageCropper
  * @memberOf wp.media.controller
- * @augments wp.media.controller.CustomizeImageCropper.Cropper
- * @inheritDoc
+ *
+ * A state for cropping an image.
+ *
+ * @class
+ * @augments wp.media.controller.Cropper
+ * @augments wp.media.controller.State
+ * @augments Backbone.Model
  */
 CustomizeImageCropper = Controller.Cropper.extend(/** @lends wp.media.controller.CustomizeImageCropper.prototype */{
-	/**
-	 * Posts the crop details to the admin.
-	 *
-	 * Uses crop measurements when flexible in both directions.
-	 * Constrains flexible side based on image ratio and size of the fixed side.
-	 *
-	 * @since 4.3.0
-	 *
-	 * @param {Object} attachment The attachment to crop.
-	 *
-	 * @returns {$.promise} A jQuery promise that represents the crop image request.
-	 */
 	doCrop: function( attachment ) {
 		var cropDetails = attachment.get( 'cropDetails' ),
 			control = this.get( 'control' ),
@@ -3752,8 +3660,7 @@ Post = Select.extend(/** @lends wp.media.view.MediaFrame.Post.prototype */{
 			requires: { selection: true },
 
 			/**
-			 * @ignore
-			 *
+			 * @callback
 			 * @fires wp.media.controller.State#insert
 			 */
 			click: function() {
@@ -6614,6 +6521,16 @@ var View = wp.media.View,
 	$ = jQuery,
 	Attachments;
 
+/**
+ * wp.media.view.Attachments
+ *
+ * @memberOf wp.media.view
+ *
+ * @class
+ * @augments wp.media.View
+ * @augments wp.Backbone.View
+ * @augments Backbone.View
+ */
 Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 	tagName:   'ul',
 	className: 'attachments',
@@ -6622,44 +6539,9 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 		tabIndex: -1
 	},
 
-	/**
-	 * Represents the overview of attachments in the Media Library.
-	 *
-	 * The constructor binds events to the collection this view represents when
-	 * adding or removing attachments or resetting the entire collection.
-	 *
-	 * @since 3.5.0
-	 *
-	 * @constructs
-	 * @memberof wp.media.view
-	 *
-	 * @augments wp.media.View
-	 *
-	 * @listens collection:add
-	 * @listens collection:remove
-	 * @listens collection:reset
-	 * @listens controller:library:selection:add
-	 * @listens scrollElement:scroll
-	 * @listens this:ready
-	 * @listens controller:open
-	 */
 	initialize: function() {
 		this.el.id = _.uniqueId('__attachments-view-');
 
-		/**
-		 * @param refreshSensitivity The time in milliseconds to throttle the scroll
-		 *                           handler.
-		 * @param refreshThreshold   The amount of pixels that should be scrolled before
-		 *                           loading more attachments from the server.
-		 * @param AttachmentView     The view class to be used for models in the
-		 *                           collection.
-		 * @param sortable           A jQuery sortable options object
-		 *                           ( http://api.jqueryui.com/sortable/ ).
-		 * @param resize             A boolean indicating whether or not to listen to
-		 *                           resize events.
-		 * @param idealColumnWidth   The width in pixels which a column should have when
-		 *                           calculating the total number of columns.
-		 */
 		_.defaults( this.options, {
 			refreshSensitivity: wp.media.isTouchDevice ? 300 : 200,
 			refreshThreshold:   3,
@@ -6679,10 +6561,6 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 			});
 		}, this );
 
-		/*
-		 * Find the view to be removed, delete it and call the remove function to clear
-		 * any set event handlers.
-		 */
 		this.collection.on( 'remove', function( attachment ) {
 			var view = this._viewsByCid[ attachment.cid ];
 			delete this._viewsByCid[ attachment.cid ];
@@ -6710,63 +6588,24 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 			this.on( 'ready', this.bindEvents );
 			this.controller.on( 'open', this.setColumns );
 
-			/*
-			 * Call this.setColumns() after this view has been rendered in the
-			 * DOM so attachments get proper width applied.
-			 */
+			// Call this.setColumns() after this view has been rendered in the DOM so
+			// attachments get proper width applied.
 			_.defer( this.setColumns, this );
 		}
 	},
 
-	/**
-	 * Listens to the resizeEvent on the window.
-	 *
-	 * Adjusts the amount of columns accordingly. First removes any existing event
-	 * handlers to prevent duplicate listeners.
-	 *
-	 * @since 4.0.0
-	 *
-	 * @listens window:resize
-	 *
-	 * @returns {void}
-	 */
 	bindEvents: function() {
 		this.$window.off( this.resizeEvent ).on( this.resizeEvent, _.debounce( this.setColumns, 50 ) );
 	},
 
-	/**
-	 * Focuses the first item in the collection.
-	 *
-	 * @since 4.0.0
-	 *
-	 * @returns {void}
-	 */
 	attachmentFocus: function() {
 		this.$( 'li:first' ).focus();
 	},
 
-	/**
-	 * Restores focus to the selected item in the collection.
-	 *
-	 * @since 4.0.0
-	 *
-	 * @returns {void}
-	 */
 	restoreFocus: function() {
 		this.$( 'li.selected:first' ).focus();
 	},
 
-	/**
-	 * Handles events for arrow key presses.
-	 *
-	 * Focuses the attachment in the direction of the used arrow key if it exists.
-	 *
-	 * @since 4.0.0
-	 *
-	 * @param {KeyboardEvent} event The keyboard event that triggered this function.
-	 *
-	 * @returns {void}
-	 */
 	arrowEvent: function( event ) {
 		var attachments = this.$el.children( 'li' ),
 			perRow = this.columns,
@@ -6777,7 +6616,7 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 			return;
 		}
 
-		// Left arrow = 37.
+		// Left arrow
 		if ( 37 === event.keyCode ) {
 			if ( 0 === index ) {
 				return;
@@ -6785,7 +6624,7 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 			attachments.eq( index - 1 ).focus();
 		}
 
-		// Up arrow = 38.
+		// Up arrow
 		if ( 38 === event.keyCode ) {
 			if ( 1 === row ) {
 				return;
@@ -6793,7 +6632,7 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 			attachments.eq( index - perRow ).focus();
 		}
 
-		// Right arrow = 39.
+		// Right arrow
 		if ( 39 === event.keyCode ) {
 			if ( attachments.length === index ) {
 				return;
@@ -6801,7 +6640,7 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 			attachments.eq( index + 1 ).focus();
 		}
 
-		// Down arrow = 40.
+		// Down arrow
 		if ( 40 === event.keyCode ) {
 			if ( Math.ceil( attachments.length / perRow ) === row ) {
 				return;
@@ -6810,33 +6649,18 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 		}
 	},
 
-	/**
-	 * Clears any set event handlers.
-	 *
-	 * @since 3.5.0
-	 *
-	 * @returns {void}
-	 */
 	dispose: function() {
 		this.collection.props.off( null, null, this );
 		if ( this.options.resize ) {
 			this.$window.off( this.resizeEvent );
 		}
 
-		// Call 'dispose' directly on the parent class.
+		/**
+		 * call 'dispose' directly on the parent class
+		 */
 		View.prototype.dispose.apply( this, arguments );
 	},
 
-	/**
-	 * Calculates the amount of columns.
-	 *
-	 * Calculates the amount of columns and sets it on the data-columns attribute
-	 * of .media-frame-content.
-	 *
-	 * @since 4.0.0
-	 *
-	 * @returns {void}
-	 */
 	setColumns: function() {
 		var prev = this.columns,
 			width = this.$el.width();
@@ -6850,18 +6674,6 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 		}
 	},
 
-	/**
-	 * Initializes jQuery sortable on the attachment list.
-	 *
-	 * Fails gracefully if jQuery sortable doesn't exist or isn't passed in the
-	 * options.
-	 *
-	 * @since 3.5.0
-	 *
-	 * @fires collection:reset
-	 *
-	 * @returns {void}
-	 */
 	initSortable: function() {
 		var collection = this.collection;
 
@@ -6873,10 +6685,8 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 			// If the `collection` has a `comparator`, disable sorting.
 			disabled: !! collection.comparator,
 
-			/*
-			 * Change the position of the attachment as soon as the mouse pointer overlaps a
-			 * thumbnail.
-			 */
+			// Change the position of the attachment as soon as the
+			// mouse pointer overlaps a thumbnail.
 			tolerance: 'pointer',
 
 			// Record the initial `index` of the dragged model.
@@ -6884,10 +6694,8 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 				ui.item.data('sortableIndexStart', ui.item.index());
 			},
 
-			/*
-			 * Update the model's index in the collection. Do so silently, as the view
-			 * is already accurate.
-			 */
+			// Update the model's index in the collection.
+			// Do so silently, as the view is already accurate.
 			update: function( event, ui ) {
 				var model = collection.at( ui.item.data('sortableIndexStart') ),
 					comparator = collection.comparator;
@@ -6911,15 +6719,14 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 				// Fire the `reset` event to ensure other collections sync.
 				collection.trigger( 'reset', collection );
 
-				// If the collection is sorted by menu order, update the menu order.
+				// If the collection is sorted by menu order,
+				// update the menu order.
 				collection.saveMenuOrder();
 			}
 		}, this.options.sortable ) );
 
-		/*
-		 * If the `orderby` property is changed on the `collection`, check to see if we
-		 * have a `comparator`. If so, disable sorting.
-		 */
+		// If the `orderby` property is changed on the `collection`,
+		// check to see if we have a `comparator`. If so, disable sorting.
 		collection.props.on( 'change:orderby', function() {
 			this.$el.sortable( 'option', 'disabled', !! collection.comparator );
 		}, this );
@@ -6928,19 +6735,12 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 		this.refreshSortable();
 	},
 
-	/**
-	 * Disables jQuery sortable if collection has a comparator or collection.orderby
-	 * equals menuOrder.
-	 *
-	 * @since 3.5.0
-	 *
-	 * @returns {void}
-	 */
 	refreshSortable: function() {
 		if ( ! this.options.sortable || ! $.fn.sortable ) {
 			return;
 		}
 
+		// If the `collection` has a `comparator`, disable sorting.
 		var collection = this.collection,
 			orderby = collection.props.get('orderby'),
 			enabled = 'menuOrder' === orderby || ! collection.comparator;
@@ -6949,13 +6749,8 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 	},
 
 	/**
-	 * Creates a new view for an attachment and adds it to _viewsByCid.
-	 *
-	 * @since 3.5.0
-	 *
 	 * @param {wp.media.model.Attachment} attachment
-	 *
-	 * @returns {wp.media.View} The created view.
+	 * @returns {wp.media.View}
 	 */
 	createAttachmentView: function( attachment ) {
 		var view = new this.options.AttachmentView({
@@ -6968,57 +6763,33 @@ Attachments = View.extend(/** @lends wp.media.view.Attachments.prototype */{
 		return this._viewsByCid[ attachment.cid ] = view;
 	},
 
-	/**
-	 * Prepares view for display.
-	 *
-	 * Creates views for every attachment in collection if the collection is not
-	 * empty, otherwise clears all views and loads more attachments.
-	 *
-	 * @since 3.5.0
-	 *
-	 * @returns {void}
-	 */
 	prepare: function() {
+		// Create all of the Attachment views, and replace
+		// the list in a single DOM operation.
 		if ( this.collection.length ) {
 			this.views.set( this.collection.map( this.createAttachmentView, this ) );
+
+		// If there are no elements, clear the views and load some.
 		} else {
 			this.views.unset();
 			this.collection.more().done( this.scroll );
 		}
 	},
 
-	/**
-	 * Triggers the scroll function to check if we should query for additional
-	 * attachments right away.
-	 *
-	 * @since 3.5.0
-	 *
-	 * @returns {void}
-	 */
 	ready: function() {
+		// Trigger the scroll event to check if we're within the
+		// threshold to query for additional attachments.
 		this.scroll();
 	},
 
-	/**
-	 * Handles scroll events.
-	 *
-	 * Shows the spinner if we're close to the bottom. Loads more attachments from
-	 * server if we're {refreshThreshold} times away from the bottom.
-	 *
-	 * @since 3.5.0
-	 *
-	 * @returns {void}
-	 */
 	scroll: function() {
 		var view = this,
 			el = this.options.scrollElement,
 			scrollTop = el.scrollTop,
 			toolbar;
 
-		/*
-		 * The scroll event occurs on the document, but the element that should be
-		 * checked is the document body.
-		 */
+		// The scroll event occurs on the document, but the element
+		// that should be checked is the document body.
 		if ( el === document ) {
 			el = document.body;
 			scrollTop = $(document).scrollTop();
@@ -9372,10 +9143,6 @@ module.exports = EditImage;
 /**
  * wp.media.view.Spinner
  *
- * Represents a spinner in the Media Library.
- *
- * @since 3.9.0
- *
  * @memberOf wp.media.view
  *
  * @class
@@ -9389,13 +9156,6 @@ var Spinner = wp.media.View.extend(/** @lends wp.media.view.Spinner.prototype */
 	spinnerTimeout: false,
 	delay: 400,
 
-	/**
-	 * Shows the spinner. Delays the visibility by the configured amount.
-	 *
-	 * @since 3.9.0
-	 *
-	 * @return {wp.media.view.Spinner} The spinner.
-	 */
 	show: function() {
 		if ( ! this.spinnerTimeout ) {
 			this.spinnerTimeout = _.delay(function( $el ) {
@@ -9406,13 +9166,6 @@ var Spinner = wp.media.View.extend(/** @lends wp.media.view.Spinner.prototype */
 		return this;
 	},
 
-	/**
-	 * Hides the spinner.
-	 *
-	 * @since 3.9.0
-	 *
-	 * @return {wp.media.view.Spinner} The spinner.
-	 */
 	hide: function() {
 		this.$el.removeClass( 'is-active' );
 		this.spinnerTimeout = clearTimeout( this.spinnerTimeout );

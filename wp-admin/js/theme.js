@@ -334,7 +334,18 @@ themes.Collection = Backbone.Collection.extend({
 			data: {
 			// Request data
 				request: _.extend({
-					per_page: 100
+					per_page: 100,
+					fields: {
+						description: true,
+						tested: true,
+						requires: true,
+						rating: true,
+						downloaded: true,
+						downloadLink: true,
+						last_updated: true,
+						homepage: true,
+						num_ratings: true
+					}
 				}, request)
 			},
 
@@ -573,26 +584,16 @@ themes.view.Theme = wp.Backbone.View.extend({
 	// Handles .disabled classes for previous/next buttons in theme installer preview
 	setNavButtonsState: function() {
 		var $themeInstaller = $( '.theme-install-overlay' ),
-			current = _.isUndefined( this.current ) ? this.model : this.current,
-			previousThemeButton = $themeInstaller.find( '.previous-theme' ),
-			nextThemeButton = $themeInstaller.find( '.next-theme' );
+			current = _.isUndefined( this.current ) ? this.model : this.current;
 
 		// Disable previous at the zero position
 		if ( 0 === this.model.collection.indexOf( current ) ) {
-			previousThemeButton
-				.addClass( 'disabled' )
-				.prop( 'disabled', true );
-
-			nextThemeButton.focus();
+			$themeInstaller.find( '.previous-theme' ).addClass( 'disabled' );
 		}
 
 		// Disable next if the next model is undefined
 		if ( _.isUndefined( this.model.collection.at( this.model.collection.indexOf( current ) + 1 ) ) ) {
-			nextThemeButton
-				.addClass( 'disabled' )
-				.prop( 'disabled', true );
-
-			previousThemeButton.focus();
+			$themeInstaller.find( '.next-theme' ).addClass( 'disabled' );
 		}
 	},
 
