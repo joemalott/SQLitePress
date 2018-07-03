@@ -4,6 +4,11 @@
 SQLitepress is the answer to the question “How quickly can I get a local instance of WordPress up and running?”
 
 The answer, about one minute.
+
+SQLitepress utilizes the plugin "SQLite Integration" By Kojima Toshiyasu. Huge thanks to his work to make this implementation possible. 
+
+## To get started
+
 Clone the repository:
 
 `git clone http://github.com/joemalott/sqlitepress your-project-name`
