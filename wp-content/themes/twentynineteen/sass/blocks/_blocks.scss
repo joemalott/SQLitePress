@@ -160,7 +160,7 @@
 			@include button-transition;
 			border: none;
 			font-size: $font__size-sm;
-			font-family: $font__heading;
+			@include font-family( $font__heading );
 			line-height: $font__line-height-heading;
 			box-sizing: border-box;
 			font-weight: bold;
@@ -198,9 +198,9 @@
 		&.is-style-outline .wp-block-button__link,
 		&.is-style-outline .wp-block-button__link:focus,
 		&.is-style-outline .wp-block-button__link:active {
-			@include button-all-transition;	
+			@include button-all-transition;
 			border-width: 2px;
-			border-style: solid;		
+			border-style: solid;
 
 			&:not(.has-background) {
 				background: transparent;
@@ -215,6 +215,9 @@
 		&.is-style-outline .wp-block-button__link:hover {
 			color: white;
 			border-color: $color__background-button-hover;
+			&:not(.has-background) {
+				color: $color__background-button-hover;
+			}
 		}
 	}
 
@@ -227,7 +230,7 @@
 
 		li {
 			color: $color__text-light;
-			font-family: $font__heading;
+			@include font-family( $font__heading );
 			font-size: calc(#{$font__size_base} * #{$font__size-ratio});
 			font-weight: bold;
 			line-height: $font__line-height-heading;
@@ -241,6 +244,14 @@
 			a {
 				text-decoration: none;
 			}
+		}
+	}
+
+	.wp-block-archives,
+	.wp-block-categories {
+
+		&.aligncenter {
+			text-align: center;
 		}
 	}
 
@@ -288,7 +299,7 @@
 
 	//! Verse
 	.wp-block-verse {
-		font-family: $font__body;
+		@include font-family( $font__body );
 		font-size: $font__size_base;
 		line-height: 1.8;
 	}
@@ -296,7 +307,7 @@
 	//! Paragraphs
 	.has-drop-cap {
 		&:not(:focus):first-letter {
-			font-family: $font__heading;
+			@include font-family( $font__heading );
 			font-size: $font__size-xxxl;
 			line-height: 1;
 			font-weight: bold;
@@ -316,6 +327,7 @@
 			margin-top: calc(4 * #{ $size__spacing-unit});
 			margin-bottom: calc(4.33 * #{ $size__spacing-unit});
 			margin-right: 0;
+			padding-left: 0;
 		}
 
 		p {
@@ -336,7 +348,7 @@
 
 		cite {
 			display: inline-block;
-			font-family: $font__heading;
+			@include font-family( $font__heading );
 			line-height: 1.6;
 			text-transform: none;
 			color: $color__text-light;
@@ -354,10 +366,14 @@
 			padding: 0;
 
 			blockquote {
-				margin-left: 0;
+				margin: $size__spacing-unit 0;
 				padding: 0;
 				text-align: left;
 				max-width: 100%;
+
+				p:first-child {
+					margin-top: 0;
+				}
 			}
 		}
 
@@ -391,10 +407,11 @@
 			}
 
 			blockquote {
-				max-width: calc(100% - (2 * #{$size__spacing-unit}));
+				max-width: 100%;
 				color: $color__background-body;
 				padding-left: 0;
 				margin-left: $size__spacing-unit;
+				margin-right: $size__spacing-unit;
 
 				&.has-text-color p,
 				&.has-text-color a,
@@ -409,6 +426,14 @@
 				@include media(tablet) {
 					margin-left: 0;
 					margin-right: 0;
+				}
+			}
+
+			&.alignright,
+			&.alignleft {
+
+				@include media(tablet) {
+					padding: $size__spacing-unit calc(2 * #{$size__spacing-unit});
 				}
 			}
 
@@ -480,20 +505,40 @@
 
 	//! Image
 	.wp-block-image {
+		max-width: 100%;
 
 		img {
 			display: block;
 		}
 
-		&.alignleft,
-		&.alignright {
-			max-width: 100%;
+		.aligncenter {
+			
+			@include postContentMaxWidth();
+
+			@include media(tablet) {
+				margin: 0;
+				width: $size__site-tablet-content;
+
+				img {
+					margin: 0 auto;
+				}
+			}
+
+			@include media(desktop) {
+				width: $size__site-desktop-content;
+
+				img {
+					margin: 0 auto;
+				}
+			}
 		}
 
 		&.alignfull img {
 			width: 100vw;
+			max-width: calc( 100% + (2 * #{$size__spacing-unit}));
 
 			@include media(tablet) {
+				max-width: calc( 125% + 150px );
 				margin-left: auto;
 				margin-right: auto;
 			}
@@ -514,16 +559,12 @@
 		.wp-block-cover-image-text,
 		.wp-block-cover-text,
 		h2 {
-			font-family: $font__heading;
+			@include font-family( $font__heading );
 			font-size: $font__size-lg;
 			font-weight: bold;
 			line-height: 1.25;
 			padding: 0;
 			color: #fff;
-			-ms-hyphens: auto;
-			-moz-hyphens: auto;
-			-webkit-hyphens: auto;
-			hyphens: auto;
 
 			@include media(tablet) {
 				font-size: $font__size-xl;
@@ -536,7 +577,7 @@
 			width: 100%;
 
 			@include media(tablet) {
-				padding: $size__spacing-unit;
+				padding: $size__spacing-unit calc(2 * #{$size__spacing-unit});
 			}
 		}
 
@@ -570,6 +611,10 @@
 		.blocks-gallery-item:last-child {
 			margin-bottom: 16px;
 		}
+
+		figcaption a {
+			color: #fff;
+		}
 	}
 
 	//! Captions
@@ -579,7 +624,7 @@
 	.wp-block-gallery .blocks-gallery-image figcaption,
 	.wp-block-gallery .blocks-gallery-item figcaption {
 		font-size: $font__size-xs;
-		font-family: $font__heading;
+		@include font-family( $font__heading );
 		line-height: $font__line-height-pre;
 		margin: 0;
 		padding: ( $size__spacing-unit * .5 );
@@ -645,7 +690,7 @@
 
 	//! File
 	.wp-block-file {
-		font-family: $font__heading;
+		@include font-family( $font__heading );
 
 		.wp-block-file__button {
 			display: table;
@@ -654,7 +699,7 @@
 			border-radius: 5px;
 			background: $color__background-button;
 			font-size: $font__size-base;
-			font-family: $font__heading;
+			@include font-family( $font__heading );
 			line-height: $font__line-height-heading;
 			text-decoration: none;
 			font-weight: bold;
@@ -700,6 +745,10 @@
 			padding-right: $size__spacing-unit;
 		}
 
+		@include media(mobile) {
+			flex-wrap: nowrap;
+		}
+
 		@include media(tablet) {
 			.wp-block-column > * {
 
@@ -732,7 +781,7 @@
 	.wp-block-latest-comments {
 
 		.wp-block-latest-comments__comment-meta {
-			font-family: $font__heading;
+			@include font-family( $font__heading );
 			font-weight: bold;
 
 			.wp-block-latest-comments__comment-date {
@@ -784,7 +833,7 @@
 	.has-secondary-background-color,
 	.has-dark-gray-background-color,
 	.has-light-gray-background-color {
-		
+
 		// Use white text against these backgrounds by default.
 		color: $color__background-body;
 

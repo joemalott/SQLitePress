@@ -82,7 +82,7 @@ this["wp"] = this["wp"] || {}; this["wp"]["formatLibrary"] =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 312);
+/******/ 	return __webpack_require__(__webpack_require__.s = 313);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -182,6 +182,13 @@ function _inherits(subClass, superClass) {
 /***/ }),
 
 /***/ 16:
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["keycodes"]; }());
+
+/***/ }),
+
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -236,13 +243,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	} else {}
 }());
 
-
-/***/ }),
-
-/***/ 17:
-/***/ (function(module, exports) {
-
-(function() { module.exports = this["wp"]["keycodes"]; }());
 
 /***/ }),
 
@@ -356,7 +356,7 @@ function _assertThisInitialized(self) {
 
 /***/ }),
 
-/***/ 312:
+/***/ 313:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -638,11 +638,11 @@ var italic = {
 var external_this_wp_url_ = __webpack_require__(24);
 
 // EXTERNAL MODULE: ./node_modules/classnames/index.js
-var classnames = __webpack_require__(16);
+var classnames = __webpack_require__(17);
 var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 
 // EXTERNAL MODULE: external {"this":["wp","keycodes"]}
-var external_this_wp_keycodes_ = __webpack_require__(17);
+var external_this_wp_keycodes_ = __webpack_require__(16);
 
 // EXTERNAL MODULE: external {"this":["wp","dom"]}
 var external_this_wp_dom_ = __webpack_require__(22);
@@ -874,7 +874,7 @@ function createLinkFormat(_ref) {
 
   if (opensInNewWindow) {
     // translators: accessibility label for external links, where the argument is the link text
-    var label = Object(external_this_wp_i18n_["sprintf"])(Object(external_this_wp_i18n_["__"])('%s (opens in a new tab)'), text).trim();
+    var label = Object(external_this_wp_i18n_["sprintf"])(Object(external_this_wp_i18n_["__"])('%s (opens in a new tab)'), text);
     format.attributes.target = '_blank';
     format.attributes.rel = 'noreferrer noopener';
     format.attributes['aria-label'] = label;
@@ -1009,10 +1009,11 @@ function (_Component) {
       }); // Apply now if URL is not being edited.
 
       if (!isShowingInput(this.props, this.state)) {
+        var selectedText = Object(external_this_wp_richText_["getTextContent"])(Object(external_this_wp_richText_["slice"])(value));
         onChange(Object(external_this_wp_richText_["applyFormat"])(value, createLinkFormat({
           url: url,
           opensInNewWindow: opensInNewWindow,
-          text: value.text
+          text: selectedText
         })));
       }
     }
@@ -1036,10 +1037,11 @@ function (_Component) {
           inputValue = _this$state.inputValue,
           opensInNewWindow = _this$state.opensInNewWindow;
       var url = Object(external_this_wp_url_["prependHTTP"])(inputValue);
+      var selectedText = Object(external_this_wp_richText_["getTextContent"])(Object(external_this_wp_richText_["slice"])(value));
       var format = createLinkFormat({
         url: url,
         opensInNewWindow: opensInNewWindow,
-        text: value.text
+        text: selectedText
       });
       event.preventDefault();
 
@@ -1059,7 +1061,7 @@ function (_Component) {
       } else if (isActive) {
         speak(Object(external_this_wp_i18n_["__"])('Link edited.'), 'assertive');
       } else {
-        speak(Object(external_this_wp_i18n_["__"])('Link inserted'), 'assertive');
+        speak(Object(external_this_wp_i18n_["__"])('Link inserted.'), 'assertive');
       }
     }
   }, {
