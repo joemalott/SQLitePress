@@ -82,75 +82,38 @@ this["wp"] = this["wp"] || {}; this["wp"]["dataControls"] =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 317);
+/******/ 	return __webpack_require__(__webpack_require__.s = 445);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 17:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ 4:
+/***/ (function(module, exports) {
 
-"use strict";
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-
-    return arr2;
-  }
-}
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
-var iterableToArray = __webpack_require__(30);
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _toConsumableArray; });
-
-
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || Object(iterableToArray["a" /* default */])(arr) || _nonIterableSpread();
-}
+(function() { module.exports = this["wp"]["data"]; }());
 
 /***/ }),
 
-/***/ 30:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _iterableToArray; });
-function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
-}
-
-/***/ }),
-
-/***/ 317:
+/***/ 445:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "apiFetch", function() { return apiFetch; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "select", function() { return select; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "syncSelect", function() { return syncSelect; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dispatch", function() { return dispatch; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "controls", function() { return controls; });
-/* harmony import */ var _babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(34);
-/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
-
-
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(47);
+/* harmony import */ var _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
 /**
  * WordPress dependencies
  */
 
+ // TODO: mark the deprecated controls after all Gutenberg usages are removed
+// import deprecated from '@wordpress/deprecated';
 
 /**
  * Dispatches a control action for triggering an api fetch call.
@@ -162,132 +125,61 @@ __webpack_require__.r(__webpack_exports__);
  * import { apiFetch } from '@wordpress/data-controls';
  *
  * // Action generator using apiFetch
- * export function* myAction {
- *		const path = '/v2/my-api/items';
- *		const items = yield apiFetch( { path } );
- *		// do something with the items.
+ * export function* myAction() {
+ * 	const path = '/v2/my-api/items';
+ * 	const items = yield apiFetch( { path } );
+ * 	// do something with the items.
  * }
  * ```
  *
  * @return {Object} The control descriptor.
  */
 
-var apiFetch = function apiFetch(request) {
+function apiFetch(request) {
   return {
     type: 'API_FETCH',
     request: request
   };
-};
-/**
- * Dispatches a control action for triggering a registry select.
- *
- * Note: when this control action is handled, it automatically considers
- * selectors that may have a resolver. It will await and return the resolved
- * value when the selector has not been resolved yet.
- *
- * @param {string} storeKey      The key for the store the selector belongs to
- * @param {string} selectorName  The name of the selector
- * @param {Array}  args          Arguments for the select.
- *
- * @example
- * ```js
- * import { select } from '@wordpress/data-controls';
- *
- * // Action generator using select
- * export function* myAction {
- *		const isSidebarOpened = yield select( 'core/edit-post', 'isEditorSideBarOpened' );
- *		// do stuff with the result from the select.
- * }
- * ```
- *
- * @return {Object} The control descriptor.
- */
-
-function select(storeKey, selectorName) {
-  for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-    args[_key - 2] = arguments[_key];
-  }
-
-  return {
-    type: 'SELECT',
-    storeKey: storeKey,
-    selectorName: selectorName,
-    args: args
-  };
 }
 /**
- * Dispatches a control action for triggering a registry dispatch.
+ * Control for resolving a selector in a registered data store.
+ * Alias for the `resolveSelect` built-in control in the `@wordpress/data` package.
  *
- * @param {string} storeKey    The key for the store the action belongs to
- * @param {string} actionName  The name of the action to dispatch
- * @param {Array}  args        Arguments for the dispatch action.
- *
- * @example
- * ```js
- * import { dispatch } from '@wordpress/data-controls';
- *
- * // Action generator using dispatch
- * export function* myAction {
- *   yield dispatch( 'core/edit-post' ).togglePublishSidebar();
- *   // do some other things.
- * }
- * ```
- *
- * @return {Object}  The control descriptor.
+ * @param {Array} args Arguments passed without change to the `@wordpress/data` control.
  */
 
-function dispatch(storeKey, actionName) {
-  for (var _len2 = arguments.length, args = new Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-    args[_key2 - 2] = arguments[_key2];
-  }
-
-  return {
-    type: 'DISPATCH',
-    storeKey: storeKey,
-    actionName: actionName,
-    args: args
-  };
+function select() {
+  // deprecated( '`select` control in `@wordpress/data-controls`', {
+  // 	alternative: 'built-in `resolveSelect` control in `@wordpress/data`',
+  // } );
+  return _wordpress_data__WEBPACK_IMPORTED_MODULE_1__["controls"].resolveSelect.apply(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["controls"], arguments);
 }
 /**
- * Utility for returning a promise that handles a selector with a resolver.
+ * Control for calling a selector in a registered data store.
+ * Alias for the `select` built-in control in the `@wordpress/data` package.
  *
- * @param {Object} registry             The data registry.
- * @param {Object} options
- * @param {string} options.storeKey     The store the selector belongs to
- * @param {string} options.selectorName The selector name
- * @param {Array}  options.args         The arguments fed to the selector
- *
- * @return {Promise}  A promise for resolving the given selector.
+ * @param {Array} args Arguments passed without change to the `@wordpress/data` control.
  */
 
-var resolveSelect = function resolveSelect(registry, _ref) {
-  var storeKey = _ref.storeKey,
-      selectorName = _ref.selectorName,
-      args = _ref.args;
-  return new Promise(function (resolve) {
-    var hasFinished = function hasFinished() {
-      return registry.select('core/data').hasFinishedResolution(storeKey, selectorName, args);
-    };
+function syncSelect() {
+  // deprecated( '`syncSelect` control in `@wordpress/data-controls`', {
+  // 	alternative: 'built-in `select` control in `@wordpress/data`',
+  // } );
+  return _wordpress_data__WEBPACK_IMPORTED_MODULE_1__["controls"].select.apply(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["controls"], arguments);
+}
+/**
+ * Control for dispatching an action in a registered data store.
+ * Alias for the `dispatch` control in the `@wordpress/data` package.
+ *
+ * @param {Array} args Arguments passed without change to the `@wordpress/data` control.
+ */
 
-    var getResult = function getResult() {
-      return registry.select(storeKey)[selectorName].apply(null, args);
-    }; // trigger the selector (to trigger the resolver)
-
-
-    var result = getResult();
-
-    if (hasFinished()) {
-      return resolve(result);
-    }
-
-    var unsubscribe = registry.subscribe(function () {
-      if (hasFinished()) {
-        unsubscribe();
-        resolve(getResult());
-      }
-    });
-  });
-};
+function dispatch() {
+  // deprecated( '`dispatch` control in `@wordpress/data-controls`', {
+  // 	alternative: 'built-in `dispatch` control in `@wordpress/data`',
+  // } );
+  return _wordpress_data__WEBPACK_IMPORTED_MODULE_1__["controls"].dispatch.apply(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["controls"], arguments);
+}
 /**
  * The default export is what you use to register the controls with your custom
  * store.
@@ -304,7 +196,7 @@ var resolveSelect = function resolveSelect(registry, _ref) {
  * import * as actions from './actions';
  * import * as resolvers from './resolvers';
  *
- * registerStore ( 'my-custom-store', {
+ * registerStore( 'my-custom-store', {
  * 	reducer,
  * 	controls,
  * 	actions,
@@ -317,52 +209,20 @@ var resolveSelect = function resolveSelect(registry, _ref) {
  *                  store.
  */
 
-
 var controls = {
-  API_FETCH: function API_FETCH(_ref2) {
-    var request = _ref2.request;
-    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_1___default()(request);
-  },
-  SELECT: Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["createRegistryControl"])(function (registry) {
-    return function (_ref3) {
-      var _registry$select;
-
-      var storeKey = _ref3.storeKey,
-          selectorName = _ref3.selectorName,
-          args = _ref3.args;
-      return registry.select(storeKey)[selectorName].hasResolver ? resolveSelect(registry, {
-        storeKey: storeKey,
-        selectorName: selectorName,
-        args: args
-      }) : (_registry$select = registry.select(storeKey))[selectorName].apply(_registry$select, Object(_babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(args));
-    };
-  }),
-  DISPATCH: Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["createRegistryControl"])(function (registry) {
-    return function (_ref4) {
-      var _registry$dispatch;
-
-      var storeKey = _ref4.storeKey,
-          actionName = _ref4.actionName,
-          args = _ref4.args;
-      return (_registry$dispatch = registry.dispatch(storeKey))[actionName].apply(_registry$dispatch, Object(_babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(args));
-    };
-  })
+  API_FETCH: function API_FETCH(_ref) {
+    var request = _ref.request;
+    return _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_0___default()(request);
+  }
 };
 
 
 /***/ }),
 
-/***/ 34:
+/***/ 47:
 /***/ (function(module, exports) {
 
 (function() { module.exports = this["wp"]["apiFetch"]; }());
-
-/***/ }),
-
-/***/ 4:
-/***/ (function(module, exports) {
-
-(function() { module.exports = this["wp"]["data"]; }());
 
 /***/ })
 

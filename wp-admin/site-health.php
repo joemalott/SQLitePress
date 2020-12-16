@@ -7,12 +7,12 @@
  */
 
 if ( isset( $_GET['tab'] ) && 'debug' === $_GET['tab'] ) {
-	require_once( dirname( __FILE__ ) . '/site-health-info.php' );
+	require_once __DIR__ . '/site-health-info.php';
 	return;
 }
 
 /** WordPress Administration Bootstrap */
-require_once( dirname( __FILE__ ) . '/admin.php' );
+require_once __DIR__ . '/admin.php';
 
 $title = __( 'Site Health Status' );
 
@@ -24,15 +24,15 @@ wp_enqueue_style( 'site-health' );
 wp_enqueue_script( 'site-health' );
 
 if ( ! class_exists( 'WP_Site_Health' ) ) {
-	require_once( ABSPATH . 'wp-admin/includes/class-wp-site-health.php' );
+	require_once ABSPATH . 'wp-admin/includes/class-wp-site-health.php';
 }
 
-$health_check_site_status = new WP_Site_Health();
+$health_check_site_status = WP_Site_Health::get_instance();
 
 // Start by checking if this is a special request checking for the existence of certain filters.
 $health_check_site_status->check_wp_version_check_exists();
 
-require_once( ABSPATH . 'wp-admin/admin-header.php' );
+require_once ABSPATH . 'wp-admin/admin-header.php';
 ?>
 <div class="health-check-header">
 	<div class="health-check-title-section">
@@ -144,17 +144,21 @@ require_once( ABSPATH . 'wp-admin/admin-header.php' );
 	<h4 class="health-check-accordion-heading">
 		<button aria-expanded="false" class="health-check-accordion-trigger" aria-controls="health-check-accordion-block-{{ data.test }}" type="button">
 			<span class="title">{{ data.label }}</span>
-			<span class="badge {{ data.badge.color }}">{{ data.badge.label }}</span>
+			<# if ( data.badge ) { #>
+				<span class="badge {{ data.badge.color }}">{{ data.badge.label }}</span>
+			<# } #>
 			<span class="icon"></span>
 		</button>
 	</h4>
 	<div id="health-check-accordion-block-{{ data.test }}" class="health-check-accordion-panel" hidden="hidden">
 		{{{ data.description }}}
-		<div class="actions">
-			<p class="button-container">{{{ data.actions }}}</p>
-		</div>
+		<# if ( data.actions ) { #>
+			<div class="actions">
+				{{{ data.actions }}}
+			</div>
+		<# } #>
 	</div>
 </script>
 
 <?php
-include( ABSPATH . 'wp-admin/admin-footer.php' );
+require_once ABSPATH . 'wp-admin/admin-footer.php';
