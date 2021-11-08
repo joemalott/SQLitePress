@@ -20,4 +20,6 @@ Open a browser at http://localhost:8000 and after inputting admin credentials yo
 
 It is NOT recommended for production environments. More for curious developers to begin tinkering with and later migrate over the theme/plugin to a normal instance of WordPress.
 
+Also I used to update this so wordpress would be at it's latest version, however, this proved tedious and so it is likely you will have to update wordpress once you get the site up and running.
+
 Happy theme/plugin development.
