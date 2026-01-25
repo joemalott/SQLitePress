@@ -1,654 +1,278 @@
-this["wp"] = this["wp"] || {}; this["wp"]["hooks"] =
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 482);
-/******/ })
-/************************************************************************/
-/******/ ({
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
 
-/***/ 17:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ 507:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ _toConsumableArray; });
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ createHooks_default)
+});
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
-var arrayLikeToArray = __webpack_require__(27);
+// UNUSED EXPORTS: _Hooks
 
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithoutHoles.js
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return Object(arrayLikeToArray["a" /* default */])(arr);
-}
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
-var iterableToArray = __webpack_require__(37);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-var unsupportedIterableToArray = __webpack_require__(31);
-
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableSpread.js
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js
-
-
-
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || Object(iterableToArray["a" /* default */])(arr) || Object(unsupportedIterableToArray["a" /* default */])(arr) || _nonIterableSpread();
-}
-
-/***/ }),
-
-/***/ 27:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _arrayLikeToArray; });
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-
-/***/ }),
-
-/***/ 31:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _unsupportedIterableToArray; });
-/* harmony import */ var _babel_runtime_helpers_esm_arrayLikeToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(27);
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return Object(_babel_runtime_helpers_esm_arrayLikeToArray__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Object(_babel_runtime_helpers_esm_arrayLikeToArray__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(o, minLen);
-}
-
-/***/ }),
-
-/***/ 37:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _iterableToArray; });
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
-}
-
-/***/ }),
-
-/***/ 482:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "createHooks", function() { return /* reexport */ build_module_createHooks; });
-__webpack_require__.d(__webpack_exports__, "addAction", function() { return /* binding */ addAction; });
-__webpack_require__.d(__webpack_exports__, "addFilter", function() { return /* binding */ addFilter; });
-__webpack_require__.d(__webpack_exports__, "removeAction", function() { return /* binding */ removeAction; });
-__webpack_require__.d(__webpack_exports__, "removeFilter", function() { return /* binding */ removeFilter; });
-__webpack_require__.d(__webpack_exports__, "hasAction", function() { return /* binding */ hasAction; });
-__webpack_require__.d(__webpack_exports__, "hasFilter", function() { return /* binding */ hasFilter; });
-__webpack_require__.d(__webpack_exports__, "removeAllActions", function() { return /* binding */ removeAllActions; });
-__webpack_require__.d(__webpack_exports__, "removeAllFilters", function() { return /* binding */ removeAllFilters; });
-__webpack_require__.d(__webpack_exports__, "doAction", function() { return /* binding */ doAction; });
-__webpack_require__.d(__webpack_exports__, "applyFilters", function() { return /* binding */ applyFilters; });
-__webpack_require__.d(__webpack_exports__, "currentAction", function() { return /* binding */ currentAction; });
-__webpack_require__.d(__webpack_exports__, "currentFilter", function() { return /* binding */ currentFilter; });
-__webpack_require__.d(__webpack_exports__, "doingAction", function() { return /* binding */ doingAction; });
-__webpack_require__.d(__webpack_exports__, "doingFilter", function() { return /* binding */ doingFilter; });
-__webpack_require__.d(__webpack_exports__, "didAction", function() { return /* binding */ didAction; });
-__webpack_require__.d(__webpack_exports__, "didFilter", function() { return /* binding */ didFilter; });
-__webpack_require__.d(__webpack_exports__, "actions", function() { return /* binding */ build_module_actions; });
-__webpack_require__.d(__webpack_exports__, "filters", function() { return /* binding */ build_module_filters; });
-
-// CONCATENATED MODULE: ./node_modules/@wordpress/hooks/build-module/validateNamespace.js
-/**
- * Validate a namespace string.
- *
- * @param  {string} namespace The namespace to validate - should take the form
- *                            `vendor/plugin/function`.
- *
- * @return {boolean}             Whether the namespace is valid.
- */
+;// ./node_modules/@wordpress/hooks/build-module/validateNamespace.js
 function validateNamespace(namespace) {
-  if ('string' !== typeof namespace || '' === namespace) {
-    // eslint-disable-next-line no-console
-    console.error('The namespace must be a non-empty string.');
+  if ("string" !== typeof namespace || "" === namespace) {
+    console.error("The namespace must be a non-empty string.");
     return false;
   }
-
   if (!/^[a-zA-Z][a-zA-Z0-9_.\-\/]*$/.test(namespace)) {
-    // eslint-disable-next-line no-console
-    console.error('The namespace can only contain numbers, letters, dashes, periods, underscores and slashes.');
+    console.error(
+      "The namespace can only contain numbers, letters, dashes, periods, underscores and slashes."
+    );
     return false;
   }
-
   return true;
 }
+var validateNamespace_default = validateNamespace;
 
-/* harmony default export */ var build_module_validateNamespace = (validateNamespace);
 
-// CONCATENATED MODULE: ./node_modules/@wordpress/hooks/build-module/validateHookName.js
-/**
- * Validate a hookName string.
- *
- * @param  {string} hookName The hook name to validate. Should be a non empty string containing
- *                           only numbers, letters, dashes, periods and underscores. Also,
- *                           the hook name cannot begin with `__`.
- *
- * @return {boolean}            Whether the hook name is valid.
- */
+;// ./node_modules/@wordpress/hooks/build-module/validateHookName.js
 function validateHookName(hookName) {
-  if ('string' !== typeof hookName || '' === hookName) {
-    // eslint-disable-next-line no-console
-    console.error('The hook name must be a non-empty string.');
+  if ("string" !== typeof hookName || "" === hookName) {
+    console.error("The hook name must be a non-empty string.");
     return false;
   }
-
   if (/^__/.test(hookName)) {
-    // eslint-disable-next-line no-console
-    console.error('The hook name cannot begin with `__`.');
+    console.error("The hook name cannot begin with `__`.");
     return false;
   }
-
   if (!/^[a-zA-Z][a-zA-Z0-9_.-]*$/.test(hookName)) {
-    // eslint-disable-next-line no-console
-    console.error('The hook name can only contain numbers, letters, dashes, periods and underscores.');
+    console.error(
+      "The hook name can only contain numbers, letters, dashes, periods and underscores."
+    );
     return false;
   }
-
   return true;
 }
-
-/* harmony default export */ var build_module_validateHookName = (validateHookName);
-
-// CONCATENATED MODULE: ./node_modules/@wordpress/hooks/build-module/createAddHook.js
-/**
- * Internal dependencies
- */
+var validateHookName_default = validateHookName;
 
 
+;// ./node_modules/@wordpress/hooks/build-module/createAddHook.js
 
-/**
- * Returns a function which, when invoked, will add a hook.
- *
- * @param  {Object}   hooks Stored hooks, keyed by hook name.
- *
- * @return {Function}       Function that adds a new hook.
- */
 
-function createAddHook(hooks) {
-  /**
-   * Adds the hook to the appropriate hooks container.
-   *
-   * @param {string}   hookName  Name of hook to add
-   * @param {string}   namespace The unique namespace identifying the callback in the form `vendor/plugin/function`.
-   * @param {Function} callback  Function to call when the hook is run
-   * @param {?number}  priority  Priority of this hook (default=10)
-   */
-  return function addHook(hookName, namespace, callback) {
-    var priority = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 10;
-
-    if (!build_module_validateHookName(hookName)) {
+function createAddHook(hooks, storeKey) {
+  return function addHook(hookName, namespace, callback, priority = 10) {
+    const hooksStore = hooks[storeKey];
+    if (!validateHookName_default(hookName)) {
       return;
     }
-
-    if (!build_module_validateNamespace(namespace)) {
+    if (!validateNamespace_default(namespace)) {
       return;
     }
-
-    if ('function' !== typeof callback) {
-      // eslint-disable-next-line no-console
-      console.error('The hook callback must be a function.');
-      return;
-    } // Validate numeric priority
-
-
-    if ('number' !== typeof priority) {
-      // eslint-disable-next-line no-console
-      console.error('If specified, the hook priority must be a number.');
+    if ("function" !== typeof callback) {
+      console.error("The hook callback must be a function.");
       return;
     }
-
-    var handler = {
-      callback: callback,
-      priority: priority,
-      namespace: namespace
-    };
-
-    if (hooks[hookName]) {
-      // Find the correct insert index of the new hook.
-      var handlers = hooks[hookName].handlers;
-      var i;
-
+    if ("number" !== typeof priority) {
+      console.error(
+        "If specified, the hook priority must be a number."
+      );
+      return;
+    }
+    const handler = { callback, priority, namespace };
+    if (hooksStore[hookName]) {
+      const handlers = hooksStore[hookName].handlers;
+      let i;
       for (i = handlers.length; i > 0; i--) {
         if (priority >= handlers[i - 1].priority) {
           break;
         }
       }
-
       if (i === handlers.length) {
-        // If append, operate via direct assignment.
         handlers[i] = handler;
       } else {
-        // Otherwise, insert before index via splice.
         handlers.splice(i, 0, handler);
-      } // We may also be currently executing this hook.  If the callback
-      // we're adding would come after the current callback, there's no
-      // problem; otherwise we need to increase the execution index of
-      // any other runs by 1 to account for the added element.
-
-
-      (hooks.__current || []).forEach(function (hookInfo) {
+      }
+      hooksStore.__current.forEach((hookInfo) => {
         if (hookInfo.name === hookName && hookInfo.currentIndex >= i) {
           hookInfo.currentIndex++;
         }
       });
     } else {
-      // This is the first hook of its type.
-      hooks[hookName] = {
+      hooksStore[hookName] = {
         handlers: [handler],
         runs: 0
       };
     }
-
-    if (hookName !== 'hookAdded') {
-      doAction('hookAdded', hookName, namespace, callback, priority);
+    if (hookName !== "hookAdded") {
+      hooks.doAction(
+        "hookAdded",
+        hookName,
+        namespace,
+        callback,
+        priority
+      );
     }
   };
 }
-
-/* harmony default export */ var build_module_createAddHook = (createAddHook);
-
-// CONCATENATED MODULE: ./node_modules/@wordpress/hooks/build-module/createRemoveHook.js
-/**
- * Internal dependencies
- */
+var createAddHook_default = createAddHook;
 
 
+;// ./node_modules/@wordpress/hooks/build-module/createRemoveHook.js
 
-/**
- * Returns a function which, when invoked, will remove a specified hook or all
- * hooks by the given name.
- *
- * @param  {Object}   hooks      Stored hooks, keyed by hook name.
- * @param  {boolean}     removeAll  Whether to remove all callbacks for a hookName, without regard to namespace. Used to create `removeAll*` functions.
- *
- * @return {Function}            Function that removes hooks.
- */
 
-function createRemoveHook(hooks, removeAll) {
-  /**
-   * Removes the specified callback (or all callbacks) from the hook with a
-   * given hookName and namespace.
-   *
-   * @param {string}    hookName  The name of the hook to modify.
-   * @param {string}    namespace The unique namespace identifying the callback in the form `vendor/plugin/function`.
-   *
-   * @return {number}             The number of callbacks removed.
-   */
+function createRemoveHook(hooks, storeKey, removeAll = false) {
   return function removeHook(hookName, namespace) {
-    if (!build_module_validateHookName(hookName)) {
+    const hooksStore = hooks[storeKey];
+    if (!validateHookName_default(hookName)) {
       return;
     }
-
-    if (!removeAll && !build_module_validateNamespace(namespace)) {
+    if (!removeAll && !validateNamespace_default(namespace)) {
       return;
-    } // Bail if no hooks exist by this name
-
-
-    if (!hooks[hookName]) {
+    }
+    if (!hooksStore[hookName]) {
       return 0;
     }
-
-    var handlersRemoved = 0;
-
+    let handlersRemoved = 0;
     if (removeAll) {
-      handlersRemoved = hooks[hookName].handlers.length;
-      hooks[hookName] = {
-        runs: hooks[hookName].runs,
+      handlersRemoved = hooksStore[hookName].handlers.length;
+      hooksStore[hookName] = {
+        runs: hooksStore[hookName].runs,
         handlers: []
       };
     } else {
-      // Try to find the specified callback to remove.
-      var handlers = hooks[hookName].handlers;
-
-      var _loop = function _loop(i) {
+      const handlers = hooksStore[hookName].handlers;
+      for (let i = handlers.length - 1; i >= 0; i--) {
         if (handlers[i].namespace === namespace) {
           handlers.splice(i, 1);
-          handlersRemoved++; // This callback may also be part of a hook that is
-          // currently executing.  If the callback we're removing
-          // comes after the current callback, there's no problem;
-          // otherwise we need to decrease the execution index of any
-          // other runs by 1 to account for the removed element.
-
-          (hooks.__current || []).forEach(function (hookInfo) {
+          handlersRemoved++;
+          hooksStore.__current.forEach((hookInfo) => {
             if (hookInfo.name === hookName && hookInfo.currentIndex >= i) {
               hookInfo.currentIndex--;
             }
           });
         }
-      };
-
-      for (var i = handlers.length - 1; i >= 0; i--) {
-        _loop(i);
       }
     }
-
-    if (hookName !== 'hookRemoved') {
-      doAction('hookRemoved', hookName, namespace);
+    if (hookName !== "hookRemoved") {
+      hooks.doAction("hookRemoved", hookName, namespace);
     }
-
     return handlersRemoved;
   };
 }
+var createRemoveHook_default = createRemoveHook;
 
-/* harmony default export */ var build_module_createRemoveHook = (createRemoveHook);
 
-// CONCATENATED MODULE: ./node_modules/@wordpress/hooks/build-module/createHasHook.js
-/**
- * Returns a function which, when invoked, will return whether any handlers are
- * attached to a particular hook.
- *
- * @param  {Object}   hooks Stored hooks, keyed by hook name.
- *
- * @return {Function}       Function that returns whether any handlers are
- *                          attached to a particular hook and optional namespace.
- */
-function createHasHook(hooks) {
-  /**
-   * Returns whether any handlers are attached for the given hookName and optional namespace.
-   *
-   * @param {string}  hookName  The name of the hook to check for.
-   * @param {?string} namespace Optional. The unique namespace identifying the callback
-   *                                      in the form `vendor/plugin/function`.
-   *
-   * @return {boolean} Whether there are handlers that are attached to the given hook.
-   */
+;// ./node_modules/@wordpress/hooks/build-module/createHasHook.js
+function createHasHook(hooks, storeKey) {
   return function hasHook(hookName, namespace) {
-    // Use the namespace if provided.
-    if ('undefined' !== typeof namespace) {
-      return hookName in hooks && hooks[hookName].handlers.some(function (hook) {
-        return hook.namespace === namespace;
-      });
+    const hooksStore = hooks[storeKey];
+    if ("undefined" !== typeof namespace) {
+      return hookName in hooksStore && hooksStore[hookName].handlers.some(
+        (hook) => hook.namespace === namespace
+      );
     }
-
-    return hookName in hooks;
+    return hookName in hooksStore;
   };
 }
-
-/* harmony default export */ var build_module_createHasHook = (createHasHook);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
-var toConsumableArray = __webpack_require__(17);
-
-// CONCATENATED MODULE: ./node_modules/@wordpress/hooks/build-module/createRunHook.js
+var createHasHook_default = createHasHook;
 
 
-/**
- * Returns a function which, when invoked, will execute all callbacks
- * registered to a hook of the specified type, optionally returning the final
- * value of the call chain.
- *
- * @param  {Object}   hooks          Stored hooks, keyed by hook name.
- * @param  {?boolean}    returnFirstArg Whether each hook callback is expected to
- *                                   return its first argument.
- *
- * @return {Function}                Function that runs hook callbacks.
- */
-function createRunHook(hooks, returnFirstArg) {
-  /**
-   * Runs all callbacks for the specified hook.
-   *
-   * @param  {string} hookName The name of the hook to run.
-   * @param  {...*}   args     Arguments to pass to the hook callbacks.
-   *
-   * @return {*}               Return value of runner, if applicable.
-   */
-  return function runHooks(hookName) {
-    if (!hooks[hookName]) {
-      hooks[hookName] = {
+;// ./node_modules/@wordpress/hooks/build-module/createRunHook.js
+function createRunHook(hooks, storeKey, returnFirstArg, async) {
+  return function runHook(hookName, ...args) {
+    const hooksStore = hooks[storeKey];
+    if (!hooksStore[hookName]) {
+      hooksStore[hookName] = {
         handlers: [],
         runs: 0
       };
     }
-
-    hooks[hookName].runs++;
-    var handlers = hooks[hookName].handlers; // The following code is stripped from production builds.
-
+    hooksStore[hookName].runs++;
+    const handlers = hooksStore[hookName].handlers;
     if (false) {}
-
-    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
     if (!handlers || !handlers.length) {
-      return returnFirstArg ? args[0] : undefined;
+      return returnFirstArg ? args[0] : void 0;
     }
-
-    var hookInfo = {
+    const hookInfo = {
       name: hookName,
       currentIndex: 0
     };
-
-    hooks.__current.push(hookInfo);
-
-    while (hookInfo.currentIndex < handlers.length) {
-      var handler = handlers[hookInfo.currentIndex];
-      var result = handler.callback.apply(null, args);
-
-      if (returnFirstArg) {
-        args[0] = result;
+    async function asyncRunner() {
+      try {
+        hooksStore.__current.add(hookInfo);
+        let result = returnFirstArg ? args[0] : void 0;
+        while (hookInfo.currentIndex < handlers.length) {
+          const handler = handlers[hookInfo.currentIndex];
+          result = await handler.callback.apply(null, args);
+          if (returnFirstArg) {
+            args[0] = result;
+          }
+          hookInfo.currentIndex++;
+        }
+        return returnFirstArg ? result : void 0;
+      } finally {
+        hooksStore.__current.delete(hookInfo);
       }
-
-      hookInfo.currentIndex++;
     }
-
-    hooks.__current.pop();
-
-    if (returnFirstArg) {
-      return args[0];
+    function syncRunner() {
+      try {
+        hooksStore.__current.add(hookInfo);
+        let result = returnFirstArg ? args[0] : void 0;
+        while (hookInfo.currentIndex < handlers.length) {
+          const handler = handlers[hookInfo.currentIndex];
+          result = handler.callback.apply(null, args);
+          if (returnFirstArg) {
+            args[0] = result;
+          }
+          hookInfo.currentIndex++;
+        }
+        return returnFirstArg ? result : void 0;
+      } finally {
+        hooksStore.__current.delete(hookInfo);
+      }
     }
+    return (async ? asyncRunner : syncRunner)();
   };
 }
+var createRunHook_default = createRunHook;
 
-/* harmony default export */ var build_module_createRunHook = (createRunHook);
 
-// CONCATENATED MODULE: ./node_modules/@wordpress/hooks/build-module/createCurrentHook.js
-/**
- * Returns a function which, when invoked, will return the name of the
- * currently running hook, or `null` if no hook of the given type is currently
- * running.
- *
- * @param  {Object}   hooks          Stored hooks, keyed by hook name.
- *
- * @return {Function}                Function that returns the current hook.
- */
-function createCurrentHook(hooks) {
-  /**
-   * Returns the name of the currently running hook, or `null` if no hook of
-   * the given type is currently running.
-   *
-   * @return {?string}             The name of the currently running hook, or
-   *                               `null` if no hook is currently running.
-   */
+;// ./node_modules/@wordpress/hooks/build-module/createCurrentHook.js
+function createCurrentHook(hooks, storeKey) {
   return function currentHook() {
-    if (!hooks.__current || !hooks.__current.length) {
-      return null;
-    }
-
-    return hooks.__current[hooks.__current.length - 1].name;
+    const hooksStore = hooks[storeKey];
+    const currentArray = Array.from(hooksStore.__current);
+    return currentArray.at(-1)?.name ?? null;
   };
 }
+var createCurrentHook_default = createCurrentHook;
 
-/* harmony default export */ var build_module_createCurrentHook = (createCurrentHook);
 
-// CONCATENATED MODULE: ./node_modules/@wordpress/hooks/build-module/createDoingHook.js
-/**
- * Returns a function which, when invoked, will return whether a hook is
- * currently being executed.
- *
- * @param  {Object}   hooks Stored hooks, keyed by hook name.
- *
- * @return {Function}       Function that returns whether a hook is currently
- *                          being executed.
- */
-function createDoingHook(hooks) {
-  /**
-   * Returns whether a hook is currently being executed.
-   *
-   * @param  {?string} hookName The name of the hook to check for.  If
-   *                            omitted, will check for any hook being executed.
-   *
-   * @return {boolean}             Whether the hook is being executed.
-   */
+;// ./node_modules/@wordpress/hooks/build-module/createDoingHook.js
+function createDoingHook(hooks, storeKey) {
   return function doingHook(hookName) {
-    // If the hookName was not passed, check for any current hook.
-    if ('undefined' === typeof hookName) {
-      return 'undefined' !== typeof hooks.__current[0];
-    } // Return the __current hook.
-
-
-    return hooks.__current[0] ? hookName === hooks.__current[0].name : false;
+    const hooksStore = hooks[storeKey];
+    if ("undefined" === typeof hookName) {
+      return hooksStore.__current.size > 0;
+    }
+    return Array.from(hooksStore.__current).some(
+      (hook) => hook.name === hookName
+    );
   };
 }
+var createDoingHook_default = createDoingHook;
 
-/* harmony default export */ var build_module_createDoingHook = (createDoingHook);
 
-// CONCATENATED MODULE: ./node_modules/@wordpress/hooks/build-module/createDidHook.js
-/**
- * Internal dependencies
- */
+;// ./node_modules/@wordpress/hooks/build-module/createDidHook.js
 
-/**
- * Returns a function which, when invoked, will return the number of times a
- * hook has been called.
- *
- * @param  {Object}   hooks Stored hooks, keyed by hook name.
- *
- * @return {Function}       Function that returns a hook's call count.
- */
-
-function createDidHook(hooks) {
-  /**
-   * Returns the number of times an action has been fired.
-   *
-   * @param  {string} hookName The hook name to check.
-   *
-   * @return {number}          The number of times the hook has run.
-   */
+function createDidHook(hooks, storeKey) {
   return function didHook(hookName) {
-    if (!build_module_validateHookName(hookName)) {
+    const hooksStore = hooks[storeKey];
+    if (!validateHookName_default(hookName)) {
       return;
     }
-
-    return hooks[hookName] && hooks[hookName].runs ? hooks[hookName].runs : 0;
+    return hooksStore[hookName] && hooksStore[hookName].runs ? hooksStore[hookName].runs : 0;
   };
 }
+var createDidHook_default = createDidHook;
 
-/* harmony default export */ var build_module_createDidHook = (createDidHook);
 
-// CONCATENATED MODULE: ./node_modules/@wordpress/hooks/build-module/createHooks.js
-/**
- * Internal dependencies
- */
+;// ./node_modules/@wordpress/hooks/build-module/createHooks.js
 
 
 
@@ -656,70 +280,200 @@ function createDidHook(hooks) {
 
 
 
-/**
- * Returns an instance of the hooks object.
- *
- * @return {Object} Object that contains all hooks.
- */
-
+class _Hooks {
+  actions;
+  filters;
+  addAction;
+  addFilter;
+  removeAction;
+  removeFilter;
+  hasAction;
+  hasFilter;
+  removeAllActions;
+  removeAllFilters;
+  doAction;
+  doActionAsync;
+  applyFilters;
+  applyFiltersAsync;
+  currentAction;
+  currentFilter;
+  doingAction;
+  doingFilter;
+  didAction;
+  didFilter;
+  constructor() {
+    this.actions = /* @__PURE__ */ Object.create(null);
+    this.actions.__current = /* @__PURE__ */ new Set();
+    this.filters = /* @__PURE__ */ Object.create(null);
+    this.filters.__current = /* @__PURE__ */ new Set();
+    this.addAction = createAddHook_default(this, "actions");
+    this.addFilter = createAddHook_default(this, "filters");
+    this.removeAction = createRemoveHook_default(this, "actions");
+    this.removeFilter = createRemoveHook_default(this, "filters");
+    this.hasAction = createHasHook_default(this, "actions");
+    this.hasFilter = createHasHook_default(this, "filters");
+    this.removeAllActions = createRemoveHook_default(this, "actions", true);
+    this.removeAllFilters = createRemoveHook_default(this, "filters", true);
+    this.doAction = createRunHook_default(this, "actions", false, false);
+    this.doActionAsync = createRunHook_default(this, "actions", false, true);
+    this.applyFilters = createRunHook_default(this, "filters", true, false);
+    this.applyFiltersAsync = createRunHook_default(this, "filters", true, true);
+    this.currentAction = createCurrentHook_default(this, "actions");
+    this.currentFilter = createCurrentHook_default(this, "filters");
+    this.doingAction = createDoingHook_default(this, "actions");
+    this.doingFilter = createDoingHook_default(this, "filters");
+    this.didAction = createDidHook_default(this, "actions");
+    this.didFilter = createDidHook_default(this, "filters");
+  }
+}
 function createHooks() {
-  var actions = Object.create(null);
-  var filters = Object.create(null);
-  actions.__current = [];
-  filters.__current = [];
-  return {
-    addAction: build_module_createAddHook(actions),
-    addFilter: build_module_createAddHook(filters),
-    removeAction: build_module_createRemoveHook(actions),
-    removeFilter: build_module_createRemoveHook(filters),
-    hasAction: build_module_createHasHook(actions),
-    hasFilter: build_module_createHasHook(filters),
-    removeAllActions: build_module_createRemoveHook(actions, true),
-    removeAllFilters: build_module_createRemoveHook(filters, true),
-    doAction: build_module_createRunHook(actions),
-    applyFilters: build_module_createRunHook(filters, true),
-    currentAction: build_module_createCurrentHook(actions),
-    currentFilter: build_module_createCurrentHook(filters),
-    doingAction: build_module_createDoingHook(actions),
-    doingFilter: build_module_createDoingHook(filters),
-    didAction: build_module_createDidHook(actions),
-    didFilter: build_module_createDidHook(filters),
-    actions: actions,
-    filters: filters
-  };
+  return new _Hooks();
 }
-
-/* harmony default export */ var build_module_createHooks = (createHooks);
-
-// CONCATENATED MODULE: ./node_modules/@wordpress/hooks/build-module/index.js
-/**
- * Internal dependencies
- */
+var createHooks_default = createHooks;
 
 
-var _createHooks = build_module_createHooks(),
-    addAction = _createHooks.addAction,
-    addFilter = _createHooks.addFilter,
-    removeAction = _createHooks.removeAction,
-    removeFilter = _createHooks.removeFilter,
-    hasAction = _createHooks.hasAction,
-    hasFilter = _createHooks.hasFilter,
-    removeAllActions = _createHooks.removeAllActions,
-    removeAllFilters = _createHooks.removeAllFilters,
-    doAction = _createHooks.doAction,
-    applyFilters = _createHooks.applyFilters,
-    currentAction = _createHooks.currentAction,
-    currentFilter = _createHooks.currentFilter,
-    doingAction = _createHooks.doingAction,
-    doingFilter = _createHooks.doingFilter,
-    didAction = _createHooks.didAction,
-    didFilter = _createHooks.didFilter,
-    build_module_actions = _createHooks.actions,
-    build_module_filters = _createHooks.filters;
 
+/***/ }),
+
+/***/ 8770:
+/***/ (() => {
 
 
 
 /***/ })
 
-/******/ });
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
+(() => {
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   actions: () => (/* binding */ actions),
+/* harmony export */   addAction: () => (/* binding */ addAction),
+/* harmony export */   addFilter: () => (/* binding */ addFilter),
+/* harmony export */   applyFilters: () => (/* binding */ applyFilters),
+/* harmony export */   applyFiltersAsync: () => (/* binding */ applyFiltersAsync),
+/* harmony export */   createHooks: () => (/* reexport safe */ _createHooks__WEBPACK_IMPORTED_MODULE_1__.A),
+/* harmony export */   currentAction: () => (/* binding */ currentAction),
+/* harmony export */   currentFilter: () => (/* binding */ currentFilter),
+/* harmony export */   defaultHooks: () => (/* binding */ defaultHooks),
+/* harmony export */   didAction: () => (/* binding */ didAction),
+/* harmony export */   didFilter: () => (/* binding */ didFilter),
+/* harmony export */   doAction: () => (/* binding */ doAction),
+/* harmony export */   doActionAsync: () => (/* binding */ doActionAsync),
+/* harmony export */   doingAction: () => (/* binding */ doingAction),
+/* harmony export */   doingFilter: () => (/* binding */ doingFilter),
+/* harmony export */   filters: () => (/* binding */ filters),
+/* harmony export */   hasAction: () => (/* binding */ hasAction),
+/* harmony export */   hasFilter: () => (/* binding */ hasFilter),
+/* harmony export */   removeAction: () => (/* binding */ removeAction),
+/* harmony export */   removeAllActions: () => (/* binding */ removeAllActions),
+/* harmony export */   removeAllFilters: () => (/* binding */ removeAllFilters),
+/* harmony export */   removeFilter: () => (/* binding */ removeFilter)
+/* harmony export */ });
+/* harmony import */ var _createHooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(507);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8770);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_types__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _types__WEBPACK_IMPORTED_MODULE_0__) if(["default","actions","addAction","addFilter","applyFilters","applyFiltersAsync","createHooks","currentAction","currentFilter","defaultHooks","didAction","didFilter","doAction","doActionAsync","doingAction","doingFilter","filters","hasAction","hasFilter","removeAction","removeAllActions","removeAllFilters","removeFilter"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _types__WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+
+
+const defaultHooks = (0,_createHooks__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)();
+const {
+  addAction,
+  addFilter,
+  removeAction,
+  removeFilter,
+  hasAction,
+  hasFilter,
+  removeAllActions,
+  removeAllFilters,
+  doAction,
+  doActionAsync,
+  applyFilters,
+  applyFiltersAsync,
+  currentAction,
+  currentFilter,
+  doingAction,
+  doingFilter,
+  didAction,
+  didFilter,
+  actions,
+  filters
+} = defaultHooks;
+
+
+})();
+
+(window.wp = window.wp || {}).hooks = __webpack_exports__;
+/******/ })()
+;

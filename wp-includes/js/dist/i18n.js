@@ -1,402 +1,254 @@
-this["wp"] = this["wp"] || {}; this["wp"]["i18n"] =
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 485);
-/******/ })
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
+/******/ 	
 /************************************************************************/
-/******/ ({
-
-/***/ 202:
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/* global window, exports, define */
-
-!function() {
-    'use strict'
-
-    var re = {
-        not_string: /[^s]/,
-        not_bool: /[^t]/,
-        not_type: /[^T]/,
-        not_primitive: /[^v]/,
-        number: /[diefg]/,
-        numeric_arg: /[bcdiefguxX]/,
-        json: /[j]/,
-        not_json: /[^j]/,
-        text: /^[^\x25]+/,
-        modulo: /^\x25{2}/,
-        placeholder: /^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,
-        key: /^([a-z_][a-z_\d]*)/i,
-        key_access: /^\.([a-z_][a-z_\d]*)/i,
-        index_access: /^\[(\d+)\]/,
-        sign: /^[+-]/
-    }
-
-    function sprintf(key) {
-        // `arguments` is not an array, but should be fine for this call
-        return sprintf_format(sprintf_parse(key), arguments)
-    }
-
-    function vsprintf(fmt, argv) {
-        return sprintf.apply(null, [fmt].concat(argv || []))
-    }
-
-    function sprintf_format(parse_tree, argv) {
-        var cursor = 1, tree_length = parse_tree.length, arg, output = '', i, k, ph, pad, pad_character, pad_length, is_positive, sign
-        for (i = 0; i < tree_length; i++) {
-            if (typeof parse_tree[i] === 'string') {
-                output += parse_tree[i]
-            }
-            else if (typeof parse_tree[i] === 'object') {
-                ph = parse_tree[i] // convenience purposes only
-                if (ph.keys) { // keyword argument
-                    arg = argv[cursor]
-                    for (k = 0; k < ph.keys.length; k++) {
-                        if (arg == undefined) {
-                            throw new Error(sprintf('[sprintf] Cannot access property "%s" of undefined value "%s"', ph.keys[k], ph.keys[k-1]))
-                        }
-                        arg = arg[ph.keys[k]]
-                    }
-                }
-                else if (ph.param_no) { // positional argument (explicit)
-                    arg = argv[ph.param_no]
-                }
-                else { // positional argument (implicit)
-                    arg = argv[cursor++]
-                }
-
-                if (re.not_type.test(ph.type) && re.not_primitive.test(ph.type) && arg instanceof Function) {
-                    arg = arg()
-                }
-
-                if (re.numeric_arg.test(ph.type) && (typeof arg !== 'number' && isNaN(arg))) {
-                    throw new TypeError(sprintf('[sprintf] expecting number but found %T', arg))
-                }
-
-                if (re.number.test(ph.type)) {
-                    is_positive = arg >= 0
-                }
-
-                switch (ph.type) {
-                    case 'b':
-                        arg = parseInt(arg, 10).toString(2)
-                        break
-                    case 'c':
-                        arg = String.fromCharCode(parseInt(arg, 10))
-                        break
-                    case 'd':
-                    case 'i':
-                        arg = parseInt(arg, 10)
-                        break
-                    case 'j':
-                        arg = JSON.stringify(arg, null, ph.width ? parseInt(ph.width) : 0)
-                        break
-                    case 'e':
-                        arg = ph.precision ? parseFloat(arg).toExponential(ph.precision) : parseFloat(arg).toExponential()
-                        break
-                    case 'f':
-                        arg = ph.precision ? parseFloat(arg).toFixed(ph.precision) : parseFloat(arg)
-                        break
-                    case 'g':
-                        arg = ph.precision ? String(Number(arg.toPrecision(ph.precision))) : parseFloat(arg)
-                        break
-                    case 'o':
-                        arg = (parseInt(arg, 10) >>> 0).toString(8)
-                        break
-                    case 's':
-                        arg = String(arg)
-                        arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
-                        break
-                    case 't':
-                        arg = String(!!arg)
-                        arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
-                        break
-                    case 'T':
-                        arg = Object.prototype.toString.call(arg).slice(8, -1).toLowerCase()
-                        arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
-                        break
-                    case 'u':
-                        arg = parseInt(arg, 10) >>> 0
-                        break
-                    case 'v':
-                        arg = arg.valueOf()
-                        arg = (ph.precision ? arg.substring(0, ph.precision) : arg)
-                        break
-                    case 'x':
-                        arg = (parseInt(arg, 10) >>> 0).toString(16)
-                        break
-                    case 'X':
-                        arg = (parseInt(arg, 10) >>> 0).toString(16).toUpperCase()
-                        break
-                }
-                if (re.json.test(ph.type)) {
-                    output += arg
-                }
-                else {
-                    if (re.number.test(ph.type) && (!is_positive || ph.sign)) {
-                        sign = is_positive ? '+' : '-'
-                        arg = arg.toString().replace(re.sign, '')
-                    }
-                    else {
-                        sign = ''
-                    }
-                    pad_character = ph.pad_char ? ph.pad_char === '0' ? '0' : ph.pad_char.charAt(1) : ' '
-                    pad_length = ph.width - (sign + arg).length
-                    pad = ph.width ? (pad_length > 0 ? pad_character.repeat(pad_length) : '') : ''
-                    output += ph.align ? sign + arg + pad : (pad_character === '0' ? sign + pad + arg : pad + sign + arg)
-                }
-            }
-        }
-        return output
-    }
-
-    var sprintf_cache = Object.create(null)
-
-    function sprintf_parse(fmt) {
-        if (sprintf_cache[fmt]) {
-            return sprintf_cache[fmt]
-        }
-
-        var _fmt = fmt, match, parse_tree = [], arg_names = 0
-        while (_fmt) {
-            if ((match = re.text.exec(_fmt)) !== null) {
-                parse_tree.push(match[0])
-            }
-            else if ((match = re.modulo.exec(_fmt)) !== null) {
-                parse_tree.push('%')
-            }
-            else if ((match = re.placeholder.exec(_fmt)) !== null) {
-                if (match[2]) {
-                    arg_names |= 1
-                    var field_list = [], replacement_field = match[2], field_match = []
-                    if ((field_match = re.key.exec(replacement_field)) !== null) {
-                        field_list.push(field_match[1])
-                        while ((replacement_field = replacement_field.substring(field_match[0].length)) !== '') {
-                            if ((field_match = re.key_access.exec(replacement_field)) !== null) {
-                                field_list.push(field_match[1])
-                            }
-                            else if ((field_match = re.index_access.exec(replacement_field)) !== null) {
-                                field_list.push(field_match[1])
-                            }
-                            else {
-                                throw new SyntaxError('[sprintf] failed to parse named argument key')
-                            }
-                        }
-                    }
-                    else {
-                        throw new SyntaxError('[sprintf] failed to parse named argument key')
-                    }
-                    match[2] = field_list
-                }
-                else {
-                    arg_names |= 2
-                }
-                if (arg_names === 3) {
-                    throw new Error('[sprintf] mixing positional and named placeholders is not (yet) supported')
-                }
-
-                parse_tree.push(
-                    {
-                        placeholder: match[0],
-                        param_no:    match[1],
-                        keys:        match[2],
-                        sign:        match[3],
-                        pad_char:    match[4],
-                        align:       match[5],
-                        width:       match[6],
-                        precision:   match[7],
-                        type:        match[8]
-                    }
-                )
-            }
-            else {
-                throw new SyntaxError('[sprintf] unexpected placeholder')
-            }
-            _fmt = _fmt.substring(match[0].length)
-        }
-        return sprintf_cache[fmt] = parse_tree
-    }
-
-    /**
-     * export to either browser or node.js
-     */
-    /* eslint-disable quote-props */
-    if (true) {
-        exports['sprintf'] = sprintf
-        exports['vsprintf'] = vsprintf
-    }
-    if (typeof window !== 'undefined') {
-        window['sprintf'] = sprintf
-        window['vsprintf'] = vsprintf
-
-        if (true) {
-            !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
-                return {
-                    'sprintf': sprintf,
-                    'vsprintf': vsprintf
-                }
-            }).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))
-        }
-    }
-    /* eslint-enable quote-props */
-}(); // eslint-disable-line
-
-
-/***/ }),
-
-/***/ 485:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "sprintf", function() { return /* reexport */ sprintf_sprintf; });
-__webpack_require__.d(__webpack_exports__, "createI18n", function() { return /* reexport */ create_i18n_createI18n; });
-__webpack_require__.d(__webpack_exports__, "setLocaleData", function() { return /* reexport */ default_i18n_setLocaleData; });
-__webpack_require__.d(__webpack_exports__, "__", function() { return /* reexport */ default_i18n_; });
-__webpack_require__.d(__webpack_exports__, "_x", function() { return /* reexport */ default_i18n_x; });
-__webpack_require__.d(__webpack_exports__, "_n", function() { return /* reexport */ default_i18n_n; });
-__webpack_require__.d(__webpack_exports__, "_nx", function() { return /* reexport */ default_i18n_nx; });
-__webpack_require__.d(__webpack_exports__, "isRTL", function() { return /* reexport */ default_i18n_isRTL; });
+__webpack_require__.d(__webpack_exports__, {
+  __: () => (/* reexport */ __),
+  _n: () => (/* reexport */ _n),
+  _nx: () => (/* reexport */ _nx),
+  _x: () => (/* reexport */ _x),
+  createI18n: () => (/* reexport */ createI18n),
+  defaultI18n: () => (/* reexport */ default_i18n_default),
+  getLocaleData: () => (/* reexport */ getLocaleData),
+  hasTranslation: () => (/* reexport */ hasTranslation),
+  isRTL: () => (/* reexport */ isRTL),
+  resetLocaleData: () => (/* reexport */ resetLocaleData),
+  setLocaleData: () => (/* reexport */ setLocaleData),
+  sprintf: () => (/* reexport */ sprintf_sprintf),
+  subscribe: () => (/* reexport */ subscribe)
+});
 
-// EXTERNAL MODULE: ./node_modules/memize/index.js
-var memize = __webpack_require__(60);
-var memize_default = /*#__PURE__*/__webpack_require__.n(memize);
-
-// EXTERNAL MODULE: ./node_modules/sprintf-js/src/sprintf.js
-var sprintf = __webpack_require__(202);
-var sprintf_default = /*#__PURE__*/__webpack_require__.n(sprintf);
-
-// CONCATENATED MODULE: ./node_modules/@wordpress/i18n/build-module/sprintf.js
+;// ./node_modules/@tannin/sprintf/src/index.js
 /**
- * External dependencies
+ * Regular expression matching format placeholder syntax.
+ *
+ * The pattern for matching named arguments is a naive and incomplete matcher
+ * against valid JavaScript identifier names.
+ *
+ * via Mathias Bynens:
+ *
+ * >An identifier must start with $, _, or any character in the Unicode
+ * >categories “Uppercase letter (Lu)”, “Lowercase letter (Ll)”, “Titlecase
+ * >letter (Lt)”, “Modifier letter (Lm)”, “Other letter (Lo)”, or “Letter
+ * >number (Nl)”.
+ * >
+ * >The rest of the string can contain the same characters, plus any U+200C zero
+ * >width non-joiner characters, U+200D zero width joiner characters, and
+ * >characters in the Unicode categories “Non-spacing mark (Mn)”, “Spacing
+ * >combining mark (Mc)”, “Decimal digit number (Nd)”, or “Connector
+ * >punctuation (Pc)”.
+ *
+ * If browser support is constrained to those supporting ES2015, this could be
+ * made more accurate using the `u` flag:
+ *
+ * ```
+ * /^[$_\p{L}\p{Nl}][$_\p{L}\p{Nl}\u200C\u200D\p{Mn}\p{Mc}\p{Nd}\p{Pc}]*$/u;
+ * ```
+ *
+ * @see http://www.pixelbeat.org/programming/gcc/format_specs.html
+ * @see https://mathiasbynens.be/notes/javascript-identifiers#valid-identifier-names
+ *
+ * @type {RegExp}
+ */
+var PATTERN =
+	/%(((\d+)\$)|(\(([$_a-zA-Z][$_a-zA-Z0-9]*)\)))?[ +0#-]*\d*(\.(\d+|\*))?(ll|[lhqL])?([cduxXefgsp%])/g;
+//               ▲         ▲                    ▲       ▲  ▲            ▲           ▲ type
+//               │         │                    │       │  │            └ Length (unsupported)
+//               │         │                    │       │  └ Precision / max width
+//               │         │                    │       └ Min width (unsupported)
+//               │         │                    └ Flags (unsupported)
+//               └ Index   └ Name (for named arguments)
+/**
+ * Given a format string, returns string with arguments interpolatation.
+ * Arguments can either be provided directly via function arguments spread, or
+ * with an array as the second argument.
+ *
+ * @see https://en.wikipedia.org/wiki/Printf_format_string
+ *
+ * @example
+ *
+ * ```js
+ * import sprintf from '@tannin/sprintf';
+ *
+ * sprintf( 'Hello %s!', 'world' );
+ * // ⇒ 'Hello world!'
+ * ```
+ * @template {string} T
+ * @overload
+ * @param {T} string - string printf format string
+ * @param {...import('../types').SprintfArgs<T>} args - arguments to interpolate
+ *
+ * @return {string} Formatted string.
  */
 
-
 /**
- * Log to console, once per message; or more precisely, per referentially equal
- * argument set. Because Jed throws errors, we log these to the console instead
- * to avoid crashing the application.
+ * Given a format string, returns string with arguments interpolatation.
+ * Arguments can either be provided directly via function arguments spread, or
+ * with an array as the second argument.
  *
- * @param {...*} args Arguments to pass to `console.error`
+ * @see https://en.wikipedia.org/wiki/Printf_format_string
+ *
+ * @example
+ *
+ * ```js
+ * import sprintf from '@tannin/sprintf';
+ *
+ * sprintf( 'Hello %s!', 'world' );
+ * // ⇒ 'Hello world!'
+ * ```
+ * @template {string} T
+ * @overload
+ * @param {T} string - string printf format string
+ * @param {import('../types').SprintfArgs<T>} args - arguments to interpolate
+ *
+ * @return {string} Formatted string.
  */
 
-var logErrorOnce = memize_default()(console.error); // eslint-disable-line no-console
-
 /**
- * Returns a formatted string. If an error occurs in applying the format, the
- * original format string is returned.
+ * Given a format string, returns string with arguments interpolatation.
+ * Arguments can either be provided directly via function arguments spread, or
+ * with an array as the second argument.
  *
- * @param {string}    format The format of the string to generate.
- * @param {...*} args Arguments to apply to the format.
+ * @see https://en.wikipedia.org/wiki/Printf_format_string
  *
- * @see http://www.diveintojavascript.com/projects/javascript-sprintf
+ * @example
  *
- * @return {string} The formatted string.
+ * ```js
+ * import sprintf from '@tannin/sprintf';
+ *
+ * sprintf( 'Hello %s!', 'world' );
+ * // ⇒ 'Hello world!'
+ * ```
+ * @template {string} T
+ * @param {T} string - string printf format string
+ * @param {...import('../types').SprintfArgs<T>} args - arguments to interpolate
+ *
+ * @return {string} Formatted string.
  */
+function sprintf(string, ...args) {
+	var i = 0;
+	if (Array.isArray(args[0])) {
+		args = /** @type {import('../types').SprintfArgs<T>[]} */ (
+			/** @type {unknown} */ args[0]
+		);
+	}
 
-function sprintf_sprintf(format) {
-  try {
-    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
+	return string.replace(PATTERN, function () {
+		var index,
+			// name needs to be documented as `string | undefined` else value will have tpye unknown.
+			/**
+			 * Name of the argument to substitute, if any.
+			 *
+			 * @type {string | undefined}
+			 */
+			name,
+			precision,
+			type,
+			value;
 
-    return sprintf_default.a.sprintf.apply(sprintf_default.a, [format].concat(args));
-  } catch (error) {
-    logErrorOnce('sprintf error: \n\n' + error.toString());
-    return format;
-  }
+		index = arguments[3];
+		name = arguments[5];
+		precision = arguments[7];
+		type = arguments[9];
+
+		// There's no placeholder substitution in the explicit "%", meaning it
+		// is not necessary to increment argument index.
+		if (type === '%') {
+			return '%';
+		}
+
+		// Asterisk precision determined by peeking / shifting next argument.
+		if (precision === '*') {
+			precision = args[i];
+			i++;
+		}
+
+		if (name === undefined) {
+			// If not a positional argument, use counter value.
+			if (index === undefined) {
+				index = i + 1;
+			}
+
+			i++;
+
+			// Positional argument.
+			value = args[index - 1];
+		} else if (
+			args[0] &&
+			typeof args[0] === 'object' &&
+			args[0].hasOwnProperty(name)
+		) {
+			// If it's a named argument, use name.
+			value = args[0][name];
+		}
+
+		// Parse as type.
+		if (type === 'f') {
+			value = parseFloat(value) || 0;
+		} else if (type === 'd') {
+			value = parseInt(value) || 0;
+		}
+
+		// Apply precision.
+		if (precision !== undefined) {
+			if (type === 'f') {
+				value = value.toFixed(precision);
+			} else if (type === 's') {
+				value = value.substr(0, precision);
+			}
+		}
+
+		// To avoid "undefined" concatenation, return empty string if no
+		// placeholder substitution can be performed.
+		return value !== undefined && value !== null ? value : '';
+	});
 }
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
-var defineProperty = __webpack_require__(5);
+;// ./node_modules/@wordpress/i18n/build-module/sprintf.js
 
-// CONCATENATED MODULE: ./node_modules/@tannin/postfix/index.js
-var PRECEDENCE, OPENERS, TERMINATORS, PATTERN;
+function sprintf_sprintf(format, ...args) {
+  return sprintf(format, ...args);
+}
+
+
+;// ./node_modules/@tannin/postfix/index.js
+var PRECEDENCE, OPENERS, TERMINATORS, postfix_PATTERN;
 
 /**
  * Operator precedence mapping.
@@ -447,7 +299,7 @@ TERMINATORS = {
  *
  * @type {RegExp}
  */
-PATTERN = /<=|>=|==|!=|&&|\|\||\?:|\(|!|\*|\/|%|\+|-|<|>|\?|\)|:/;
+postfix_PATTERN = /<=|>=|==|!=|&&|\|\||\?:|\(|!|\*|\/|%|\+|-|<|>|\?|\)|:/;
 
 /**
  * Given a C expression, returns the equivalent postfix (Reverse Polish)
@@ -473,7 +325,7 @@ function postfix( expression ) {
 		stack = [],
 		match, operator, term, element;
 
-	while ( ( match = expression.match( PATTERN ) ) ) {
+	while ( ( match = expression.match( postfix_PATTERN ) ) ) {
 		operator = match[ 0 ];
 
 		// Term is the string preceding the operator match. It may contain
@@ -521,7 +373,7 @@ function postfix( expression ) {
 	return terms.concat( stack.reverse() );
 }
 
-// CONCATENATED MODULE: ./node_modules/@tannin/evaluate/index.js
+;// ./node_modules/@tannin/evaluate/index.js
 /**
  * Operator callback functions.
  *
@@ -600,7 +452,7 @@ var OPERATORS = {
  *
  * @return {*} Result of evaluation.
  */
-function evaluate_evaluate( postfix, variables ) {
+function evaluate( postfix, variables ) {
 	var stack = [],
 		i, j, args, getOperatorResult, term, value;
 
@@ -633,7 +485,7 @@ function evaluate_evaluate( postfix, variables ) {
 	return stack[ 0 ];
 }
 
-// CONCATENATED MODULE: ./node_modules/@tannin/compile/index.js
+;// ./node_modules/@tannin/compile/index.js
 
 
 
@@ -660,11 +512,11 @@ function compile( expression ) {
 	var terms = postfix( expression );
 
 	return function( variables ) {
-		return evaluate_evaluate( terms, variables );
+		return evaluate( terms, variables );
 	};
 }
 
-// CONCATENATED MODULE: ./node_modules/@tannin/plural-forms/index.js
+;// ./node_modules/@tannin/plural-forms/index.js
 
 
 /**
@@ -684,7 +536,7 @@ function pluralForms( expression ) {
 	};
 }
 
-// CONCATENATED MODULE: ./node_modules/tannin/index.js
+;// ./node_modules/tannin/index.js
 
 
 /**
@@ -899,506 +751,242 @@ Tannin.prototype.dcnpgettext = function( domain, context, singular, plural, n ) 
 	return index === 0 ? singular : plural;
 };
 
-// CONCATENATED MODULE: ./node_modules/@wordpress/i18n/build-module/create-i18n.js
+;// ./node_modules/@wordpress/i18n/build-module/create-i18n.js
 
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { Object(defineProperty["a" /* default */])(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-/**
- * External dependencies
- */
-
-/**
- * @typedef {Record<string,any>} LocaleData
- */
-
-/**
- * Default locale data to use for Tannin domain when not otherwise provided.
- * Assumes an English plural forms expression.
- *
- * @type {LocaleData}
- */
-
-var DEFAULT_LOCALE_DATA = {
-  '': {
-    /** @param {number} n */
-    plural_forms: function plural_forms(n) {
+const DEFAULT_LOCALE_DATA = {
+  "": {
+    plural_forms(n) {
       return n === 1 ? 0 : 1;
     }
   }
 };
-/**
- * An i18n instance
- *
- * @typedef {Object} I18n
- * @property {Function} setLocaleData Merges locale data into the Tannin instance by domain. Accepts data in a
- *                                    Jed-formatted JSON object shape.
- * @property {Function} __            Retrieve the translation of text.
- * @property {Function} _x            Retrieve translated string with gettext context.
- * @property {Function} _n            Translates and retrieves the singular or plural form based on the supplied
- *                                    number.
- * @property {Function} _nx           Translates and retrieves the singular or plural form based on the supplied
- *                                    number, with gettext context.
- * @property {Function} isRTL         Check if current locale is RTL.
- */
-
-/**
- * Create an i18n instance
- *
- * @param {LocaleData} [initialData]    Locale data configuration.
- * @param {string}     [initialDomain]  Domain for which configuration applies.
- * @return {I18n}                       I18n instance
- */
-
-var create_i18n_createI18n = function createI18n(initialData, initialDomain) {
-  /**
-   * The underlying instance of Tannin to which exported functions interface.
-   *
-   * @type {Tannin}
-   */
-  var tannin = new Tannin({});
-  /**
-   * Merges locale data into the Tannin instance by domain. Accepts data in a
-   * Jed-formatted JSON object shape.
-   *
-   * @see http://messageformat.github.io/Jed/
-   *
-   * @param {LocaleData} [data]   Locale data configuration.
-   * @param {string}     [domain] Domain for which configuration applies.
-   */
-
-  var setLocaleData = function setLocaleData(data) {
-    var domain = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'default';
-    tannin.data[domain] = _objectSpread(_objectSpread(_objectSpread({}, DEFAULT_LOCALE_DATA), tannin.data[domain]), data); // Populate default domain configuration (supported locale date which omits
-    // a plural forms expression).
-
-    tannin.data[domain][''] = _objectSpread(_objectSpread({}, DEFAULT_LOCALE_DATA['']), tannin.data[domain]['']);
+const I18N_HOOK_REGEXP = /^i18n\.(n?gettext|has_translation)(_|$)/;
+const createI18n = (initialData, initialDomain, hooks) => {
+  const tannin = new Tannin({});
+  const listeners = /* @__PURE__ */ new Set();
+  const notifyListeners = () => {
+    listeners.forEach((listener) => listener());
   };
-  /**
-   * Wrapper for Tannin's `dcnpgettext`. Populates default locale data if not
-   * otherwise previously assigned.
-   *
-   * @param {string|undefined} domain   Domain to retrieve the translated text.
-   * @param {string|undefined} context  Context information for the translators.
-   * @param {string}           single   Text to translate if non-plural. Used as
-   *                                    fallback return value on a caught error.
-   * @param {string}           [plural] The text to be used if the number is
-   *                                    plural.
-   * @param {number}           [number] The number to compare against to use
-   *                                    either the singular or plural form.
-   *
-   * @return {string} The translated string.
-   */
-
-
-  var dcnpgettext = function dcnpgettext() {
-    var domain = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'default';
-    var context = arguments.length > 1 ? arguments[1] : undefined;
-    var single = arguments.length > 2 ? arguments[2] : undefined;
-    var plural = arguments.length > 3 ? arguments[3] : undefined;
-    var number = arguments.length > 4 ? arguments[4] : undefined;
-
+  const subscribe = (callback) => {
+    listeners.add(callback);
+    return () => listeners.delete(callback);
+  };
+  const getLocaleData = (domain = "default") => tannin.data[domain];
+  const doSetLocaleData = (data, domain = "default") => {
+    tannin.data[domain] = {
+      ...tannin.data[domain],
+      ...data
+    };
+    tannin.data[domain][""] = {
+      ...DEFAULT_LOCALE_DATA[""],
+      ...tannin.data[domain]?.[""]
+    };
+    delete tannin.pluralForms[domain];
+  };
+  const setLocaleData = (data, domain) => {
+    doSetLocaleData(data, domain);
+    notifyListeners();
+  };
+  const addLocaleData = (data, domain = "default") => {
+    tannin.data[domain] = {
+      ...tannin.data[domain],
+      ...data,
+      // Populate default domain configuration (supported locale date which omits
+      // a plural forms expression).
+      "": {
+        ...DEFAULT_LOCALE_DATA[""],
+        ...tannin.data[domain]?.[""],
+        ...data?.[""]
+      }
+    };
+    delete tannin.pluralForms[domain];
+    notifyListeners();
+  };
+  const resetLocaleData = (data, domain) => {
+    tannin.data = {};
+    tannin.pluralForms = {};
+    setLocaleData(data, domain);
+  };
+  const dcnpgettext = (domain = "default", context, single, plural, number) => {
     if (!tannin.data[domain]) {
-      setLocaleData(undefined, domain);
+      doSetLocaleData(void 0, domain);
     }
-
     return tannin.dcnpgettext(domain, context, single, plural, number);
   };
-  /**
-   * Retrieve the translation of text.
-   *
-   * @see https://developer.wordpress.org/reference/functions/__/
-   *
-   * @param {string} text     Text to translate.
-   * @param {string} [domain] Domain to retrieve the translated text.
-   *
-   * @return {string} Translated text.
-   */
-
-
-  var __ = function __(text, domain) {
-    return dcnpgettext(domain, undefined, text);
+  const getFilterDomain = (domain) => domain || "default";
+  const __ = (text, domain) => {
+    let translation = dcnpgettext(domain, void 0, text);
+    if (!hooks) {
+      return translation;
+    }
+    translation = hooks.applyFilters(
+      "i18n.gettext",
+      translation,
+      text,
+      domain
+    );
+    return hooks.applyFilters(
+      "i18n.gettext_" + getFilterDomain(domain),
+      translation,
+      text,
+      domain
+    );
   };
-  /**
-   * Retrieve translated string with gettext context.
-   *
-   * @see https://developer.wordpress.org/reference/functions/_x/
-   *
-   * @param {string} text     Text to translate.
-   * @param {string} context  Context information for the translators.
-   * @param {string} [domain] Domain to retrieve the translated text.
-   *
-   * @return {string} Translated context string without pipe.
-   */
-
-
-  var _x = function _x(text, context, domain) {
-    return dcnpgettext(domain, context, text);
+  const _x = (text, context, domain) => {
+    let translation = dcnpgettext(domain, context, text);
+    if (!hooks) {
+      return translation;
+    }
+    translation = hooks.applyFilters(
+      "i18n.gettext_with_context",
+      translation,
+      text,
+      context,
+      domain
+    );
+    return hooks.applyFilters(
+      "i18n.gettext_with_context_" + getFilterDomain(domain),
+      translation,
+      text,
+      context,
+      domain
+    );
   };
-  /**
-   * Translates and retrieves the singular or plural form based on the supplied
-   * number.
-   *
-   * @see https://developer.wordpress.org/reference/functions/_n/
-   *
-   * @param {string} single   The text to be used if the number is singular.
-   * @param {string} plural   The text to be used if the number is plural.
-   * @param {number} number   The number to compare against to use either the
-   *                          singular or plural form.
-   * @param {string} [domain] Domain to retrieve the translated text.
-   *
-   * @return {string} The translated singular or plural form.
-   */
-
-
-  var _n = function _n(single, plural, number, domain) {
-    return dcnpgettext(domain, undefined, single, plural, number);
+  const _n = (single, plural, number, domain) => {
+    let translation = dcnpgettext(
+      domain,
+      void 0,
+      single,
+      plural,
+      number
+    );
+    if (!hooks) {
+      return translation;
+    }
+    translation = hooks.applyFilters(
+      "i18n.ngettext",
+      translation,
+      single,
+      plural,
+      number,
+      domain
+    );
+    return hooks.applyFilters(
+      "i18n.ngettext_" + getFilterDomain(domain),
+      translation,
+      single,
+      plural,
+      number,
+      domain
+    );
   };
-  /**
-   * Translates and retrieves the singular or plural form based on the supplied
-   * number, with gettext context.
-   *
-   * @see https://developer.wordpress.org/reference/functions/_nx/
-   *
-   * @param {string} single   The text to be used if the number is singular.
-   * @param {string} plural   The text to be used if the number is plural.
-   * @param {number} number   The number to compare against to use either the
-   *                          singular or plural form.
-   * @param {string} context  Context information for the translators.
-   * @param {string} [domain] Domain to retrieve the translated text.
-   *
-   * @return {string} The translated singular or plural form.
-   */
-
-
-  var _nx = function _nx(single, plural, number, context, domain) {
-    return dcnpgettext(domain, context, single, plural, number);
+  const _nx = (single, plural, number, context, domain) => {
+    let translation = dcnpgettext(
+      domain,
+      context,
+      single,
+      plural,
+      number
+    );
+    if (!hooks) {
+      return translation;
+    }
+    translation = hooks.applyFilters(
+      "i18n.ngettext_with_context",
+      translation,
+      single,
+      plural,
+      number,
+      context,
+      domain
+    );
+    return hooks.applyFilters(
+      "i18n.ngettext_with_context_" + getFilterDomain(domain),
+      translation,
+      single,
+      plural,
+      number,
+      context,
+      domain
+    );
   };
-  /**
-   * Check if current locale is RTL.
-   *
-   * **RTL (Right To Left)** is a locale property indicating that text is written from right to left.
-   * For example, the `he` locale (for Hebrew) specifies right-to-left. Arabic (ar) is another common
-   * language written RTL. The opposite of RTL, LTR (Left To Right) is used in other languages,
-   * including English (`en`, `en-US`, `en-GB`, etc.), Spanish (`es`), and French (`fr`).
-   *
-   * @return {boolean} Whether locale is RTL.
-   */
-
-
-  var isRTL = function isRTL() {
-    return 'rtl' === _x('ltr', 'text direction');
+  const isRTL = () => {
+    return "rtl" === _x("ltr", "text direction");
   };
-
+  const hasTranslation = (single, context, domain) => {
+    const key = context ? context + "" + single : single;
+    let result = !!tannin.data?.[domain ?? "default"]?.[key];
+    if (hooks) {
+      result = hooks.applyFilters(
+        "i18n.has_translation",
+        result,
+        single,
+        context,
+        domain
+      );
+      result = hooks.applyFilters(
+        "i18n.has_translation_" + getFilterDomain(domain),
+        result,
+        single,
+        context,
+        domain
+      );
+    }
+    return result;
+  };
   if (initialData) {
     setLocaleData(initialData, initialDomain);
   }
-
+  if (hooks) {
+    const onHookAddedOrRemoved = (hookName) => {
+      if (I18N_HOOK_REGEXP.test(hookName)) {
+        notifyListeners();
+      }
+    };
+    hooks.addAction("hookAdded", "core/i18n", onHookAddedOrRemoved);
+    hooks.addAction("hookRemoved", "core/i18n", onHookAddedOrRemoved);
+  }
   return {
-    setLocaleData: setLocaleData,
-    __: __,
-    _x: _x,
-    _n: _n,
-    _nx: _nx,
-    isRTL: isRTL
+    getLocaleData,
+    setLocaleData,
+    addLocaleData,
+    resetLocaleData,
+    subscribe,
+    __,
+    _x,
+    _n,
+    _nx,
+    isRTL,
+    hasTranslation
   };
 };
 
-// CONCATENATED MODULE: ./node_modules/@wordpress/i18n/build-module/default-i18n.js
-/**
- * Internal dependencies
- */
 
-var i18n = create_i18n_createI18n();
-/*
- * Comments in this file are duplicated from ./i18n due to
- * https://github.com/WordPress/gutenberg/pull/20318#issuecomment-590837722
- */
+;// external ["wp","hooks"]
+const external_wp_hooks_namespaceObject = window["wp"]["hooks"];
+;// ./node_modules/@wordpress/i18n/build-module/default-i18n.js
 
-/**
- * @typedef {import('./create-i18n').LocaleData} LocaleData
- */
 
-/**
- * Merges locale data into the Tannin instance by domain. Accepts data in a
- * Jed-formatted JSON object shape.
- *
- * @see http://messageformat.github.io/Jed/
- *
- * @param {LocaleData} [data]   Locale data configuration.
- * @param {string}     [domain] Domain for which configuration applies.
- */
+const i18n = createI18n(void 0, void 0, external_wp_hooks_namespaceObject.defaultHooks);
+var default_i18n_default = i18n;
+const getLocaleData = i18n.getLocaleData.bind(i18n);
+const setLocaleData = i18n.setLocaleData.bind(i18n);
+const resetLocaleData = i18n.resetLocaleData.bind(i18n);
+const subscribe = i18n.subscribe.bind(i18n);
+const __ = i18n.__.bind(i18n);
+const _x = i18n._x.bind(i18n);
+const _n = i18n._n.bind(i18n);
+const _nx = i18n._nx.bind(i18n);
+const isRTL = i18n.isRTL.bind(i18n);
+const hasTranslation = i18n.hasTranslation.bind(i18n);
 
-var default_i18n_setLocaleData = i18n.setLocaleData.bind(i18n);
-/**
- * Retrieve the translation of text.
- *
- * @see https://developer.wordpress.org/reference/functions/__/
- *
- * @param {string} text     Text to translate.
- * @param {string} [domain] Domain to retrieve the translated text.
- *
- * @return {string} Translated text.
- */
 
-var default_i18n_ = i18n.__.bind(i18n);
-/**
- * Retrieve translated string with gettext context.
- *
- * @see https://developer.wordpress.org/reference/functions/_x/
- *
- * @param {string} text     Text to translate.
- * @param {string} context  Context information for the translators.
- * @param {string} [domain] Domain to retrieve the translated text.
- *
- * @return {string} Translated context string without pipe.
- */
-
-var default_i18n_x = i18n._x.bind(i18n);
-/**
- * Translates and retrieves the singular or plural form based on the supplied
- * number.
- *
- * @see https://developer.wordpress.org/reference/functions/_n/
- *
- * @param {string} single   The text to be used if the number is singular.
- * @param {string} plural   The text to be used if the number is plural.
- * @param {number} number   The number to compare against to use either the
- *                          singular or plural form.
- * @param {string} [domain] Domain to retrieve the translated text.
- *
- * @return {string} The translated singular or plural form.
- */
-
-var default_i18n_n = i18n._n.bind(i18n);
-/**
- * Translates and retrieves the singular or plural form based on the supplied
- * number, with gettext context.
- *
- * @see https://developer.wordpress.org/reference/functions/_nx/
- *
- * @param {string} single   The text to be used if the number is singular.
- * @param {string} plural   The text to be used if the number is plural.
- * @param {number} number   The number to compare against to use either the
- *                          singular or plural form.
- * @param {string} context  Context information for the translators.
- * @param {string} [domain] Domain to retrieve the translated text.
- *
- * @return {string} The translated singular or plural form.
- */
-
-var default_i18n_nx = i18n._nx.bind(i18n);
-/**
- * Check if current locale is RTL.
- *
- * **RTL (Right To Left)** is a locale property indicating that text is written from right to left.
- * For example, the `he` locale (for Hebrew) specifies right-to-left. Arabic (ar) is another common
- * language written RTL. The opposite of RTL, LTR (Left To Right) is used in other languages,
- * including English (`en`, `en-US`, `en-GB`, etc.), Spanish (`es`), and French (`fr`).
- *
- * @return {boolean} Whether locale is RTL.
- */
-
-var default_i18n_isRTL = i18n.isRTL.bind(i18n);
-
-// CONCATENATED MODULE: ./node_modules/@wordpress/i18n/build-module/index.js
+;// ./node_modules/@wordpress/i18n/build-module/index.js
 
 
 
 
 
-/***/ }),
-
-/***/ 5:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _defineProperty; });
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-/***/ }),
-
-/***/ 60:
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Memize options object.
- *
- * @typedef MemizeOptions
- *
- * @property {number} [maxSize] Maximum size of the cache.
- */
-
-/**
- * Internal cache entry.
- *
- * @typedef MemizeCacheNode
- *
- * @property {?MemizeCacheNode|undefined} [prev] Previous node.
- * @property {?MemizeCacheNode|undefined} [next] Next node.
- * @property {Array<*>}                   args   Function arguments for cache
- *                                               entry.
- * @property {*}                          val    Function result.
- */
-
-/**
- * Properties of the enhanced function for controlling cache.
- *
- * @typedef MemizeMemoizedFunction
- *
- * @property {()=>void} clear Clear the cache.
- */
-
-/**
- * Accepts a function to be memoized, and returns a new memoized function, with
- * optional options.
- *
- * @template {Function} F
- *
- * @param {F}             fn        Function to memoize.
- * @param {MemizeOptions} [options] Options object.
- *
- * @return {F & MemizeMemoizedFunction} Memoized function.
- */
-function memize( fn, options ) {
-	var size = 0;
-
-	/** @type {?MemizeCacheNode|undefined} */
-	var head;
-
-	/** @type {?MemizeCacheNode|undefined} */
-	var tail;
-
-	options = options || {};
-
-	function memoized( /* ...args */ ) {
-		var node = head,
-			len = arguments.length,
-			args, i;
-
-		searchCache: while ( node ) {
-			// Perform a shallow equality test to confirm that whether the node
-			// under test is a candidate for the arguments passed. Two arrays
-			// are shallowly equal if their length matches and each entry is
-			// strictly equal between the two sets. Avoid abstracting to a
-			// function which could incur an arguments leaking deoptimization.
-
-			// Check whether node arguments match arguments length
-			if ( node.args.length !== arguments.length ) {
-				node = node.next;
-				continue;
-			}
-
-			// Check whether node arguments match arguments values
-			for ( i = 0; i < len; i++ ) {
-				if ( node.args[ i ] !== arguments[ i ] ) {
-					node = node.next;
-					continue searchCache;
-				}
-			}
-
-			// At this point we can assume we've found a match
-
-			// Surface matched node to head if not already
-			if ( node !== head ) {
-				// As tail, shift to previous. Must only shift if not also
-				// head, since if both head and tail, there is no previous.
-				if ( node === tail ) {
-					tail = node.prev;
-				}
-
-				// Adjust siblings to point to each other. If node was tail,
-				// this also handles new tail's empty `next` assignment.
-				/** @type {MemizeCacheNode} */ ( node.prev ).next = node.next;
-				if ( node.next ) {
-					node.next.prev = node.prev;
-				}
-
-				node.next = head;
-				node.prev = null;
-				/** @type {MemizeCacheNode} */ ( head ).prev = node;
-				head = node;
-			}
-
-			// Return immediately
-			return node.val;
-		}
-
-		// No cached value found. Continue to insertion phase:
-
-		// Create a copy of arguments (avoid leaking deoptimization)
-		args = new Array( len );
-		for ( i = 0; i < len; i++ ) {
-			args[ i ] = arguments[ i ];
-		}
-
-		node = {
-			args: args,
-
-			// Generate the result from original function
-			val: fn.apply( null, args ),
-		};
-
-		// Don't need to check whether node is already head, since it would
-		// have been returned above already if it was
-
-		// Shift existing head down list
-		if ( head ) {
-			head.prev = node;
-			node.next = head;
-		} else {
-			// If no head, follows that there's no tail (at initial or reset)
-			tail = node;
-		}
-
-		// Trim tail if we're reached max size and are pending cache insertion
-		if ( size === /** @type {MemizeOptions} */ ( options ).maxSize ) {
-			tail = /** @type {MemizeCacheNode} */ ( tail ).prev;
-			/** @type {MemizeCacheNode} */ ( tail ).next = null;
-		} else {
-			size++;
-		}
-
-		head = node;
-
-		return node.val;
-	}
-
-	memoized.clear = function() {
-		head = null;
-		tail = null;
-		size = 0;
-	};
-
-	if ( false ) {}
-
-	// Ignore reason: There's not a clear solution to create an intersection of
-	// the function with additional properties, where the goal is to retain the
-	// function signature of the incoming argument and add control properties
-	// on the return value.
-
-	// @ts-ignore
-	return memoized;
-}
-
-module.exports = memize;
-
-
-/***/ })
-
-/******/ });
+(window.wp = window.wp || {}).i18n = __webpack_exports__;
+/******/ })()
+;
