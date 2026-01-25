@@ -1,12 +1,12 @@
 <?php
 /**
- * Show the appropriate content for the Chat post format.
+ * Shows the appropriate content for the Chat post format.
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package WordPress
  * @subpackage Twenty_Twenty_One
- * @since 1.0.0
+ * @since Twenty Twenty-One 1.0
  */
 
 // If there are paragraph blocks, print up to two.
