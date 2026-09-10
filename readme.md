@@ -1,25 +1,51 @@
-# SQLitepress
+# SQLitePress (archived)
 
+**This project is retired. Use [WordPress Playground](https://developer.wordpress.org/playground/) instead.**
 
-SQLitepress is the answer to the question “How quickly can I get a local instance of WordPress up and running?”
+```
+npx @wp-playground/cli@latest start
+```
 
-The answer, about one minute.
-Clone the repository:
+That gives you a local WordPress on SQLite in seconds. No Docker, no MySQL, no vendored copy of WordPress core, and nothing to keep updated.
 
-`git clone http://github.com/joemalott/sqlitepress your-project-name`
+## Why this is archived
 
-Then simply move into your project directory
+SQLitePress was built in 2017 to answer one question: how fast can you get a local WordPress running? The trick was to vendor a full WordPress checkout into git alongside the SQLite drop-in, so `git clone` plus `php -S localhost:8000` was all you needed.
 
-`cd your-project-name`
+It worked, but every WordPress release meant re-vendoring the entire core tree by hand. I did that five times in nine years and the repo was usually out of date. The last snapshot here is WordPress 6.9 with the official [sqlite-database-integration](https://github.com/WordPress/sqlite-database-integration) plugin.
 
-Then fire up PHP server. On OSX this is
+The tooling caught up. WordPress Playground runs PHP compiled to WebAssembly against SQLite, so there is no core to vendor and no version to chase.
 
-`php -S localhost:8000`
+## What to use now
 
-Open a browser at http://localhost:8000 and after inputting admin credentials you are immediately in a new instance of WordPress. With the power of SQLite you now have a highly portable instance to begin tinkering with.
+Playground CLI, for a throwaway or persistent local site:
 
-It is NOT recommended for production environments. More for curious developers to begin tinkering with and later migrate over the theme/plugin to a normal instance of WordPress.
+```
+npx @wp-playground/cli@latest start
+```
 
-Also I used to update this so wordpress would be at it's latest version, however, this proved tedious and so it is likely you will have to update wordpress once you get the site up and running.
+The site persists between runs under `~/.wordpress-playground/sites/`. Useful flags:
 
-Happy theme/plugin development.
+- `--wp=6.9` and `--php=8.3` to pin versions
+- `--mount=/host/path:/vfs/path` to develop a theme or plugin in place
+- `--auto-mount` to detect and mount the current project
+- `--port=9400` to change the port
+- `--reset` to wipe the stored site and start clean
+
+If you would rather have a GUI, [Studio](https://developer.wordpress.com/studio/) is a free desktop app built on the same WebAssembly and SQLite engine, with one-click sites on macOS, Windows and Linux.
+
+If you want SQLite on a normal WordPress install rather than a Playground one, install the [sqlite-database-integration](https://github.com/WordPress/sqlite-database-integration) plugin directly. It is still a feature plugin and has not been merged into core. Its 2025 driver rewrite closed most of the remaining MySQL compatibility gaps.
+
+Neither this project nor SQLite-backed WordPress in general is meant for production.
+
+## The old instructions
+
+Kept for anyone who lands here from an old link. This repository still works as it did.
+
+```
+git clone https://github.com/joemalott/SQLitePress your-project-name
+cd your-project-name
+php -S localhost:8000
+```
+
+Open http://localhost:8000, enter admin credentials, and you have WordPress 6.9 on SQLite. You will want to update WordPress once you are in.
